@@ -1,53 +1,23 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
-import 'package:http/http.dart';
 import 'package:taskmanagment/core/model/login.dart';
-import 'package:taskmanagment/utils/constans/app_url.dart';
 import 'package:taskmanagment/utils/enums/status.dart';
 
-import '../model/sign_up.dart';
+abstract class AuthProvider with ChangeNotifier {
+  // Abstract method for logging in a user.
+  // This method must be implemented by any concrete subclass.
+  // It takes an email and a password as parameters.
+  Future<void> login(String email, String password);
 
-class AuthProvider with ChangeNotifier {
-  // enum assign in variable ----------------------
+  // Abstract getter for obtaining the login data.
+  // This would return an instance of the `Login` model, which contains user login information.
+  // Subclasses must provide a concrete implementation to return login data.
+  Login? get loginData;
 
-   Status _loggedInStatus = Status.NotLoggedIn;
-   Status _registeredInStatus = Status.NotRegistered;
+  // Abstract getter that indicates whether a login operation is currently in progress.
+  // This is typically used to manage loading states in the UI.
+  bool get isLoading;
 
-  // getter  ----------------------
-
-  Status get loggedInStatus => _loggedInStatus;
-
-  Status get registeredInStatus => _registeredInStatus;
-
-// setter ----------------------
-
-  Future<Map<String, dynamic>> login(String email, String password) async {
-    var result;
-
-    final Map<String,dynamic> loginData = {
-        "email":email,
-        "password":password
-
-    };
-
-    _loggedInStatus = Status.Authentication;
-    notifyListeners();
-
-    Response response = await post(
-      Uri(path: AppUrl.login,),
-      body: jsonEncode(loginData),
-      headers: {'Content-Type':'application/json'}
-    );
-
-    if(response.statusCode == 200){
-      final Map<String,dynamic> responseData = jsonDecode(response.body);
-      var userData = responseData['data'];
-
-      Login login = Login.fromJson(userData);
-
-
-    }
-
-  }
+  // Abstract getter for the current status.
+  // The `Status` enum would define various states, such as `authenticated`, `unauthenticated`, `loading`, etc.
+  Status get status;
 }

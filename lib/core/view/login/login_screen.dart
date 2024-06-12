@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:taskmanagment/utils/extensions/context_ext.dart';
-
 import '../common/widgets/background_image.dart';
 import '../common/widgets/bottom_text.dart';
 import '../common/widgets/reuseable_elevated_button.dart';
 import '../common/widgets/text_feild_style.dart';
-import '../common/widgets/text_style.dart';
 import '../forgetPassword/forget_password_screen.dart';
 import '../main_bottom_nav_bar.dart';
 import '../signup/registration_screen.dart';
@@ -26,7 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final theme= context.theme;
+    final theme = context.theme;
     return Scaffold(
       body: Stack(children: [
         //background image use in reuseable widget
@@ -85,43 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => const MainBottomNavBar()),
-                                (route) => false);
-                        // if (_form.currentState!.validate()) {
-                        //   //api call for login
-                        //   final result = await networkRequester().postRequester(
-                        //       "https://task.teamrabbil.com/api/v1/login",
-                        //       {
-                        //         "email": emailController.text,
-                        //         "password": passwordController.text
-                        //       });
-                        //   if (result["status"] == "success") {
-                        //
-                        //     //for user login or not
-                        //     final sharePrefs=await SharedPreferences.getInstance();
-                        //     //data store in user data email,first name,last name,token
-                        //     userData.token=result['token'];
-                        //     userData.email=result['data']['email'];
-                        //     userData.firstName=result['data']['firstName'];
-                        //     userData.lastName=result['data']['lastName'];
-                        //
-                        //
-                        //     //use SharedPreferences for set data in share preference
-                        //     sharePrefs.setString("email", result['data']['email']);
-                        //     sharePrefs.setString("firstName", result['data']['firstName']);
-                        //     sharePrefs.setString("lastName", result['data']['lastName']);
-                        //     sharePrefs.setString("token", result['token']);
-                        //
-                        //     Navigator.pushAndRemoveUntil(
-                        //         context,
-                        //         MaterialPageRoute(
-                        //             builder: (context) => const MainBottomNavBar()),
-                        //         (route) => false);
-                        //   }else{
-                        //     ScaffoldMessenger.of(context).showSnackBar(
-                        //         const SnackBar(content: Text("please Enter correct Email/Password ")));
-                        //
-                        //   }
-                        // }
+                            (route) => false);
                       },
                     ),
                     const SizedBox(
