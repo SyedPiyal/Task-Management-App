@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:taskmanagment/core/providers/auth_provider.dart';
 import 'package:taskmanagment/utils/extensions/context_ext.dart';
+import '../../../utils/enums/status.dart';
 import '../common/widgets/background_image.dart';
 import '../common/widgets/bottom_text.dart';
 import '../common/widgets/reuseable_elevated_button.dart';
@@ -24,6 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme;
+    final loginProvider = Provider.of<AuthProvider>(context);
     return Scaffold(
       body: Stack(children: [
         //background image use in reuseable widget
@@ -49,9 +53,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       controller: emailController,
                       //text form feild style use reuseable widget
                       decoration: textFeildStyle("Email:"),
-                      validator: (String? text) {
-                        if (text?.isEmpty ?? true) {
-                          return "Enter Email";
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your email';
                         }
                         return null;
                       },
@@ -64,11 +68,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       controller: passwordController,
                       //text form feild style use reuseable widget
                       decoration: textFeildStyle("Password:"),
-                      validator: (String? text) {
-                        if (text?.isEmpty ?? true) {
-                          return "Enter Password";
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your Password';
                         }
-
                         return null;
                       },
                     ),
@@ -76,15 +79,38 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(
                       height: 18,
                     ),
-                    ReuseableElevatedButton(
-                      onTap: () async {
-                        Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const MainBottomNavBar()),
-                            (route) => false);
-                      },
-                    ),
+
+                    // show loading ----------------------
+
+                    if (loginProvider.status == Status.Authentication)
+                      const CircularProgressIndicator(),
+                    if (loginProvider.status != Status.Authentication)
+                      ReuseableElevatedButton(
+                        onTap: () async {
+                          if (_form.currentState?.validate() ?? false) {
+                            await loginProvider.login(
+                              emailController.text,
+                              passwordController.text,
+                            );
+                            if (loginProvider.status == Status.LoggedIn) {
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const MainBottomNavBar(),
+                                ),
+                                (route) => false,
+                              );
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Login failed'),
+                                ),
+                              );
+                            }
+                          }
+                        },
+                      ),
                     const SizedBox(
                       height: 32,
                     ),
@@ -93,15 +119,18 @@ class _LoginScreenState extends State<LoginScreen> {
                         onPressed: () {
                           //go to forget password screen
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const ForgetPasswordScreen()));
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const ForgetPasswordScreen(),
+                            ),
+                          );
                         },
                         child: const Text(
                           "Forget Password ?",
-                          style:
-                              TextStyle(color: Color.fromRGBO(95, 95, 95, 95)),
+                          style: TextStyle(
+                            color: Color.fromRGBO(95, 95, 95, 95),
+                          ),
                         ),
                       ),
                     ),
@@ -114,8 +143,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    const RegistrationScreen()),
+                              builder: (context) => const RegistrationScreen(),
+                            ),
                             (route) => false);
                       },
                       buttonText: "Signup",
