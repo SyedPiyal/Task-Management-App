@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:taskmanagment/core/providers/auth_provider.dart';
+import 'package:taskmanagment/core/model/login.dart';
+import 'package:taskmanagment/core/service/auth_service.dart';
 import 'package:taskmanagment/utils/extensions/context_ext.dart';
-import '../../../utils/enums/status.dart';
 import '../common/widgets/background_image.dart';
 import '../common/widgets/bottom_text.dart';
 import '../common/widgets/reuseable_elevated_button.dart';
@@ -21,13 +20,36 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _form = GlobalKey<FormState>();
 
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  final AuthService _authService = AuthService();
+
+  void _loginService() async {
+    if (_form.currentState!.validate()) {
+      Login loginData = Login(
+          email: _emailController.text, password: _passwordController.text);
+      try {
+        UserData userData = await _authService.loginService(loginData);
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const MainBottomNavBar(),
+          ),
+        );
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Login Failed: $e'),
+          ),
+        );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final theme = context.theme;
-    final loginProvider = Provider.of<AuthProvider>(context);
     return Scaffold(
       body: Stack(children: [
         //background image use in reuseable widget
@@ -50,7 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 20,
                     ),
                     TextFormField(
-                      controller: emailController,
+                      controller: _emailController,
                       //text form feild style use reuseable widget
                       decoration: textFeildStyle("Email:"),
                       validator: (value) {
@@ -65,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     TextFormField(
                       obscureText: true,
-                      controller: passwordController,
+                      controller: _passwordController,
                       //text form feild style use reuseable widget
                       decoration: textFeildStyle("Password:"),
                       validator: (value) {
@@ -82,35 +104,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
                     // show loading ----------------------
 
-                    if (loginProvider.status == Status.Authentication)
-                      const CircularProgressIndicator(),
-                    if (loginProvider.status != Status.Authentication)
-                      ReuseableElevatedButton(
-                        onTap: () async {
-                          if (_form.currentState?.validate() ?? false) {
-                            await loginProvider.login(
-                              emailController.text,
-                              passwordController.text,
-                            );
-                            if (loginProvider.status == Status.LoggedIn) {
-                              Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const MainBottomNavBar(),
-                                ),
-                                (route) => false,
-                              );
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Login failed'),
-                                ),
-                              );
-                            }
-                          }
-                        },
-                      ),
+                    ReuseableElevatedButton(
+                      onTap: () => _loginService,
+                    ),
                     const SizedBox(
                       height: 32,
                     ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
 
+import '../common/widgets/change_status_task.dart';
 import '../common/widgets/summery_card.dart';
 import '../common/widgets/task_widget.dart';
 
@@ -61,7 +62,9 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                     description: "Unknown",
                     type: "New",
                     date: "Unknown",
-                    onEditTap: () {},
+                    onEditTap: () {
+                      showModalSheetChangeStatus(context,/*task.sId ??*/ "");
+                    },
                     onDeleteTap: () {},
                   );
                 }),

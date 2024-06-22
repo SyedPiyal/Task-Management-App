@@ -1,18 +1,38 @@
 
-
-
 class Login {
+  String? email;
+  String? password;
+
+  Login({
+    this.email,
+    this.password,
+  });
+
+  factory Login.fromJson(Map<String, dynamic> json) => Login(
+    email: json["email"],
+    password: json["password"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "email": email,
+    "password": password,
+  };
+}
+
+
+
+class UserData {
   String? status;
   String? token;
   Data? data;
 
-  Login({
+  UserData({
     this.status,
     this.token,
     this.data,
   });
 
-  factory Login.fromJson(Map<String, dynamic> json) => Login(
+  factory UserData.fromJson(Map<String, dynamic> json) => UserData(
     status: json["status"],
     token: json["token"],
     data: json["data"] == null ? null : Data.fromJson(json["data"]),
@@ -56,3 +76,4 @@ class Data {
     "photo": photo,
   };
 }
+

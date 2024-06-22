@@ -6,8 +6,8 @@ Card buildSummeryCard(int count,String title) {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
 
-        Text(count.toString(),style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),),
-        SizedBox(height: 5,),
+        Text(count.toString(),style: const TextStyle(fontSize: 18,fontWeight: FontWeight.w600),),
+        const SizedBox(height: 5,),
         FittedBox(child: Text("$title Task")),
       ],
     ),

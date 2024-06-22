@@ -12,18 +12,18 @@ showModalSheetChangeStatus(context,String taskId) {
       builder: (context) {
         return StatefulBuilder(builder: (context, changeState) {
           return Padding(
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             child: Column(
               children: [
                 Text(
                   "Change Status Of Task",
                   style: titleTextStyle,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
                 RadioListTile(
-                    title: Text("In Progress"),
+                    title: const Text("In Progress"),
                     value: "Progress",
                     groupValue: taskStatus,
                     onChanged: (value) {
@@ -31,7 +31,7 @@ showModalSheetChangeStatus(context,String taskId) {
                       changeState(() {});
                     }),
                 RadioListTile(
-                    title: Text("Completed"),
+                    title: const Text("Completed"),
                     value: "Completed",
                     groupValue: taskStatus,
                     onChanged: (value) {
@@ -39,18 +39,18 @@ showModalSheetChangeStatus(context,String taskId) {
                       changeState(() {});
                     }),
                 RadioListTile(
-                    title: Text("Cancelled"),
+                    title: const Text("Cancelled"),
                     value: "Cancelled",
                     groupValue: taskStatus,
                     onChanged: (value) {
                       taskStatus = value!;
                       changeState(() {});
                     }),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 if(taskStatusInprogress==true)
-                  Center(child: CircularProgressIndicator(),)
+                  const Center(child: CircularProgressIndicator(),)
                 else
                   ReuseableElevatedButton(
 
