@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:taskmanagment/core/view/home/widgets/task_card.dart';
 
+import '../../../utils/constans/string.dart';
+
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
 
@@ -8,12 +10,10 @@ class HomeView extends StatefulWidget {
   State<HomeView> createState() => _HomeViewState();
 }
 
-List<String> items = ['Sleep', 'Walk', 'University Personal Personal Personal Personal', 'Personal'];
-List<Color> colors = [Colors.blue[800]!, const Color(0xFFffe5b4), Colors.red];
-List<int> days = [4, 5, 6, 7, 8, 9, 10];
-List<String> daysNames = ['Wed', 'Thu', 'Fri', 'Sat', 'Sun', 'Mon', 'Tue'];
-
 class _HomeViewState extends State<HomeView> {
+  // Add a state variable to keep track of the selected date index
+  int _selectedDateIndex = 0; // Initialize with -1 (no selection)
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,37 +43,46 @@ class _HomeViewState extends State<HomeView> {
                     child: ListView.separated(
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (BuildContext context, int index) {
-                        return Container(
-                          height: 55.0,
-                          width: 50.0,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.0),
-                            color: index == 0
-                                ? const Color(0xFF00003f)
-                                : const Color(0xFFffe5b4),
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Text(
-                                days[index].toString(),
-                                style: TextStyle(
-                                    color: index == 0
-                                        ? Colors.white
-                                        : const Color(0xFF00003f),
-                                    fontSize: 24.0,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                              Text(
-                                daysNames[index],
-                                style: TextStyle(
-                                    color: index == 0
-                                        ? Colors.white
-                                        : const Color(0xFF00003f),
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                            ],
+                        // Determine the background color based on selection
+                        Color backgroundColor = _selectedDateIndex == index
+                            ? const Color(0xFF00003f) // Selected color
+                            : const Color(0xFFffe5b4);
+                        return GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _selectedDateIndex =
+                                  index; // Update the selected index
+                            });
+                          },
+                          child: Container(
+                            height: 55.0,
+                            width: 50.0,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.0),
+                                color: backgroundColor),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Text(
+                                  days[index].toString(),
+                                  style: TextStyle(
+                                      color: _selectedDateIndex == index
+                                          ? Colors.white
+                                          : const Color(0xFF00003f),
+                                      fontSize: 24.0,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                Text(
+                                  daysNames[index],
+                                  style: TextStyle(
+                                      color: _selectedDateIndex == index
+                                          ? Colors.white
+                                          : const Color(0xFF00003f),
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ],
+                            ),
                           ),
                         );
                       },

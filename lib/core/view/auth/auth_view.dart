@@ -4,6 +4,7 @@ import 'package:taskmanagment/core/view/auth/widgets/login.dart';
 import 'package:taskmanagment/core/view/auth/widgets/middle_container.dart';
 import 'package:taskmanagment/core/view/auth/widgets/signup.dart';
 import '../../../utils/colors/palette.dart';
+import '../home/home_view.dart';
 
 class AuthView extends StatefulWidget {
   const AuthView({super.key});
@@ -13,9 +14,25 @@ class AuthView extends StatefulWidget {
 }
 
 class _AuthViewState extends State<AuthView> {
-  bool isSignupScreen = true;
+  bool isSignupScreen = false;
   bool isMale = true;
   bool isRememberMe = false;
+
+  void _handleArrowForwardPress() {
+    if (isSignupScreen) {
+      // Navigate to login screen
+      setState(() {
+        isSignupScreen = false;
+      });
+    } else {
+      // Navigate to HomeView screen
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => const HomeView(),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,16 +89,17 @@ class _AuthViewState extends State<AuthView> {
           MiddleContainer(
             showShadow: true,
             isSignupScreen: isSignupScreen,
+            onSubmit: _handleArrowForwardPress,
           ),
           //Main Container for Login and Signup
           AnimatedPositioned(
-            duration: const Duration(milliseconds: 700),
+            duration: const Duration(milliseconds: 400),
             curve: Curves.bounceInOut,
-            top: isSignupScreen ? 200 : 230,
+            top: isSignupScreen ? 200 : 270,
             child: AnimatedContainer(
-              duration: const Duration(milliseconds: 700),
+              duration: const Duration(milliseconds: 400),
               curve: Curves.bounceInOut,
-              height: isSignupScreen ? 380 : 250,
+              height: isSignupScreen ? 380 : 260,
               padding: const EdgeInsets.all(20),
               width: MediaQuery.of(context).size.width - 40,
               margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -156,6 +174,15 @@ class _AuthViewState extends State<AuthView> {
                         )
                       ],
                     ),
+                    if (!isSignupScreen)
+                      LoginContainer(
+                        isRememberMe: isRememberMe,
+                        onChanged: () {
+                          setState(() {
+                            isRememberMe = !isRememberMe;
+                          });
+                        },
+                      ),
                     if (isSignupScreen)
                       SignUpContainer(
                         isMale: isMale,
@@ -170,15 +197,6 @@ class _AuthViewState extends State<AuthView> {
                           });
                         },
                       ),
-                    if (!isSignupScreen)
-                      LoginContainer(
-                        isRememberMe: isRememberMe,
-                        onChnaged: () {
-                          setState(() {
-                            isRememberMe = !isRememberMe;
-                          });
-                        },
-                      )
                   ],
                 ),
               ),
@@ -188,6 +206,7 @@ class _AuthViewState extends State<AuthView> {
           MiddleContainer(
             showShadow: false,
             isSignupScreen: isSignupScreen,
+            onSubmit: _handleArrowForwardPress,
           ),
           // Bottom buttons
           Positioned(

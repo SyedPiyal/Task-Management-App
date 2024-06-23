@@ -5,15 +5,16 @@ import 'custom_textfiled.dart';
 
 class LoginContainer extends StatelessWidget {
   final bool isRememberMe;
-  final Function() onChnaged;
+  final Function() onChanged;
 
   const LoginContainer(
-      {super.key, required this.isRememberMe, required this.onChnaged});
+      {super.key, required this.isRememberMe, required this.onChanged});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(top: 20),
+      margin: const EdgeInsets.only(top: 20,bottom:10),
+      padding: EdgeInsets.only(bottom: 20),
       child: Column(
         children: [
           const CustomTextFiled(
@@ -37,24 +38,21 @@ class LoginContainer extends StatelessWidget {
                     value: isRememberMe,
                     activeColor: Palette.textColor2,
                     onChanged: (value) {
-                      onChnaged();
+                      onChanged();
                     },
                   ),
-                  const Text("Remember me",
-                      style: TextStyle(fontSize: 12, color: Palette.textColor1))
+                  const Text(
+                    "Remember me",
+                    style: TextStyle(fontSize: 12, color: Palette.textColor1),
+                  )
                 ],
               ),
               TextButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                     MaterialPageRoute(
-                      builder: (context) => HomeView(),
-                    ),
-                  );
-                },
-                child: const Text("Forgot Password?",
-                    style: TextStyle(fontSize: 12, color: Palette.textColor1)),
+                onPressed: () {},
+                child: const Text(
+                  "Forgot Password?",
+                  style: TextStyle(fontSize: 12, color: Palette.textColor1),
+                ),
               )
             ],
           )

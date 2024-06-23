@@ -60,22 +60,20 @@ class TaskCard extends StatelessWidget {
           ],
         ),
 
-
         //--------------> right side container for task details <--------------//
 
-        Container(
-          height: 100.0,
-          padding: const EdgeInsets.symmetric(horizontal: 5),
-          decoration: const BoxDecoration(
-            color: Color(0xFFffe5b4),
-            borderRadius: BorderRadius.only(
-              topRight: Radius.circular(40.0),
-              bottomRight: Radius.circular(40.0),
+        Flexible(
+          child: Container(
+            height: 100.0,
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            decoration: const BoxDecoration(
+              color: Color(0xFFffe5b4),
+              borderRadius: BorderRadius.only(
+                topRight: Radius.circular(40.0),
+                bottomRight: Radius.circular(40.0),
+              ),
             ),
-          ),
-          child: Expanded(
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 Text(
                   number,
@@ -85,11 +83,17 @@ class TaskCard extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Text(
-                  item,
-                  style: const TextStyle(
-                    fontSize: 20.0,
-                    color: Color(0xFF00003f),
+                const SizedBox(width: 10,),
+                Flexible(
+                  child: Text(
+                    item,
+                    style: const TextStyle(
+                      fontSize: 20.0,
+                      color: Color(0xFF00003f),
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                    // Prevent overflow by truncating text
+                    maxLines: 1,
                   ),
                 ),
               ],
