@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:taskmanagment/utils/extensions/context_ext.dart';
 
 class TaskCard extends StatelessWidget {
   final String number;
@@ -17,6 +18,7 @@ class TaskCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme=context.theme;
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
@@ -66,31 +68,24 @@ class TaskCard extends StatelessWidget {
           child: Container(
             height: 100.0,
             padding: const EdgeInsets.symmetric(horizontal: 10),
-            decoration: const BoxDecoration(
-              color: Color(0xFFffe5b4),
-              borderRadius: BorderRadius.only(
+            decoration:  BoxDecoration(
+              color: theme.colorScheme.secondary,
+              borderRadius: const BorderRadius.only(
                 topRight: Radius.circular(40.0),
                 bottomRight: Radius.circular(40.0),
               ),
             ),
             child: Row(
-              children: <Widget>[
+              children: [
                 Text(
                   number,
-                  style: const TextStyle(
-                    fontSize: 30.0,
-                    color: Color(0xFF00003f),
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: theme.textTheme.headlineLarge,
                 ),
                 const SizedBox(width: 10,),
                 Flexible(
                   child: Text(
                     item,
-                    style: const TextStyle(
-                      fontSize: 20.0,
-                      color: Color(0xFF00003f),
-                    ),
+                    style: theme.textTheme.titleMedium,
                     overflow: TextOverflow.ellipsis,
                     // Prevent overflow by truncating text
                     maxLines: 1,

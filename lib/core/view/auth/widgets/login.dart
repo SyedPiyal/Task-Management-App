@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:taskmanagment/core/view/home/home_view.dart';
+import 'package:taskmanagment/utils/extensions/context_ext.dart';
 import '../../../../utils/colors/palette.dart';
 import 'custom_textfiled.dart';
 
@@ -12,9 +13,10 @@ class LoginContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme;
     return Container(
-      margin: const EdgeInsets.only(top: 20,bottom:10),
-      padding: EdgeInsets.only(bottom: 20),
+      margin: const EdgeInsets.only(top: 20, bottom: 10),
+      padding: const EdgeInsets.only(bottom: 20),
       child: Column(
         children: [
           const CustomTextFiled(
@@ -41,17 +43,21 @@ class LoginContainer extends StatelessWidget {
                       onChanged();
                     },
                   ),
-                  const Text(
+                  Text(
                     "Remember me",
-                    style: TextStyle(fontSize: 12, color: Palette.textColor1),
+                    style: theme.textTheme.labelMedium?.copyWith(
+                      color: theme.colorScheme.surfaceVariant,
+                    ),
                   )
                 ],
               ),
               TextButton(
                 onPressed: () {},
-                child: const Text(
+                child: Text(
                   "Forgot Password?",
-                  style: TextStyle(fontSize: 12, color: Palette.textColor1),
+                  style: theme.textTheme.labelMedium?.copyWith(
+                    color: theme.colorScheme.surfaceVariant,
+                  ),
                 ),
               )
             ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:taskmanagment/utils/extensions/context_ext.dart';
 
 import '../../../../utils/colors/palette.dart';
 
@@ -17,6 +18,7 @@ class CustomTextFiled extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme;
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
       child: TextField(
@@ -25,23 +27,29 @@ class CustomTextFiled extends StatelessWidget {
         decoration: InputDecoration(
           prefixIcon: Icon(
             icon,
-            color: Palette.iconColor,
+            color: theme.colorScheme.onTertiary,
           ),
-          enabledBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Palette.textColor1),
-            borderRadius: BorderRadius.all(
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: theme.colorScheme.surfaceVariant,
+            ),
+            borderRadius: const BorderRadius.all(
               Radius.circular(35.0),
             ),
           ),
-          focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Palette.textColor1),
-            borderRadius: BorderRadius.all(
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: theme.colorScheme.surfaceVariant,
+            ),
+            borderRadius: const BorderRadius.all(
               Radius.circular(35.0),
             ),
           ),
           contentPadding: const EdgeInsets.all(10),
           hintText: hintText,
-          hintStyle: const TextStyle(fontSize: 14, color: Palette.textColor1),
+          hintStyle: theme.textTheme.bodyMedium?.copyWith(
+            color: theme.colorScheme.surfaceVariant,
+          ),
         ),
       ),
     );

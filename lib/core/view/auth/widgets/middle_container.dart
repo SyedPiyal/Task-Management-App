@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:taskmanagment/utils/extensions/context_ext.dart';
 
 class MiddleContainer extends StatelessWidget {
   final bool showShadow;
@@ -14,6 +15,7 @@ class MiddleContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme=context.theme;
     return AnimatedPositioned(
       duration: const Duration(milliseconds: 400),
       curve: Curves.bounceInOut,
@@ -28,7 +30,7 @@ class MiddleContainer extends StatelessWidget {
             width: 90,
             padding: const EdgeInsets.all(15),
             decoration: BoxDecoration(
-                color: Colors.white,
+                color: theme.colorScheme.onPrimary,
                 borderRadius: BorderRadius.circular(50),
                 boxShadow: [
                   if (showShadow)
@@ -53,9 +55,9 @@ class MiddleContainer extends StatelessWidget {
                               blurRadius: 2,
                               offset: const Offset(0, 1))
                         ]),
-                    child: const Icon(
+                    child: Icon(
                       Icons.arrow_forward,
-                      color: Colors.white,
+                      color: theme.colorScheme.onPrimary,
                     ),
                   )
                 : const Center(),

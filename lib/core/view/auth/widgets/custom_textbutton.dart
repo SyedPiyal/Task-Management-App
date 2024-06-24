@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:taskmanagment/utils/extensions/context_ext.dart';
 
 class CustomTextButton extends StatelessWidget {
   final IconData icon;
   final String title;
   final Color backgroundColor;
-  const CustomTextButton({super.key, required this.icon, required this.title, required this.backgroundColor});
+
+  const CustomTextButton(
+      {super.key,
+      required this.icon,
+      required this.title,
+      required this.backgroundColor});
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme;
     return TextButton(
       onPressed: () {},
       style: TextButton.styleFrom(
-          foregroundColor: Colors.white,
-          //side: const BorderSide(width: 1, color: Colors.grey),
+          foregroundColor: theme.colorScheme.onPrimary,
           minimumSize: const Size(145, 40),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
@@ -27,7 +33,7 @@ class CustomTextButton extends StatelessWidget {
             width: 5,
           ),
           Text(
-            title,
+            title,style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onPrimary),
           )
         ],
       ),

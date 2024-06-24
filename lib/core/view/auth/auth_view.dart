@@ -3,6 +3,7 @@ import 'package:taskmanagment/core/view/auth/widgets/custom_textbutton.dart';
 import 'package:taskmanagment/core/view/auth/widgets/login.dart';
 import 'package:taskmanagment/core/view/auth/widgets/middle_container.dart';
 import 'package:taskmanagment/core/view/auth/widgets/signup.dart';
+import 'package:taskmanagment/utils/extensions/context_ext.dart';
 import '../../../utils/colors/palette.dart';
 import '../home/home_view.dart';
 
@@ -36,6 +37,7 @@ class _AuthViewState extends State<AuthView> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme;
     return Scaffold(
       backgroundColor: Palette.backgroundColor,
       body: Stack(
@@ -47,27 +49,21 @@ class _AuthViewState extends State<AuthView> {
             right: 0,
             left: 0,
             child: Container(
-              padding: const EdgeInsets.only(top: 90, left: 20, bottom: 20),
-              color: const Color(0xFF3b5999).withOpacity(.85),
+              padding: const EdgeInsets.only(top: 70, left: 20, bottom: 20),
+              color: theme.colorScheme.primary,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   RichText(
                     text: TextSpan(
-                        text: "Welcome to",
-                        style: TextStyle(
-                          fontSize: 22,
-                          letterSpacing: 2,
-                          color: Colors.yellow[700],
-                        ),
+                        text: "Welcome ",
+                        style: theme.textTheme.headlineLarge?.copyWith(
+                            color: theme.colorScheme.onInverseSurface),
                         children: [
                           TextSpan(
-                            text: isSignupScreen ? " Task Manager" : " Back,",
-                            style: TextStyle(
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.yellow[700],
-                            ),
+                            text: isSignupScreen ? "to Task Manager" : " Back,",
+                            style: theme.textTheme.headlineLarge?.copyWith(
+                                color: theme.colorScheme.onInverseSurface),
                           )
                         ]),
                   ),
@@ -76,10 +72,7 @@ class _AuthViewState extends State<AuthView> {
                   ),
                   Text(
                     isSignupScreen ? "Signup to Continue" : "Login to Continue",
-                    style: const TextStyle(
-                      letterSpacing: 1,
-                      color: Colors.white,
-                    ),
+                    style: theme.textTheme.bodyLarge?.copyWith(color: theme.colorScheme.onPrimary),
                   )
                 ],
               ),
@@ -104,7 +97,7 @@ class _AuthViewState extends State<AuthView> {
               width: MediaQuery.of(context).size.width - 40,
               margin: const EdgeInsets.symmetric(horizontal: 20),
               decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: theme.colorScheme.onPrimary,
                   borderRadius: BorderRadius.circular(15),
                   boxShadow: [
                     BoxShadow(
@@ -127,20 +120,22 @@ class _AuthViewState extends State<AuthView> {
                           child: Column(
                             children: [
                               Text(
-                                "LOGIN",
-                                style: TextStyle(
+                                "Login",
+                                style: theme.textTheme.bodyLarge?.copyWith(color:!isSignupScreen
+                                ? theme.colorScheme.onSurface
+                                    : theme.colorScheme.surfaceVariant)/*TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
                                     color: !isSignupScreen
                                         ? Palette.activeColor
-                                        : Palette.textColor1),
+                                        : Palette.textColor1)*/,
                               ),
                               if (!isSignupScreen)
                                 Container(
                                   margin: const EdgeInsets.only(top: 3),
                                   height: 2,
                                   width: 55,
-                                  color: Colors.orange,
+                                  color: theme.colorScheme.onInverseSurface,
                                 )
                             ],
                           ),
@@ -154,20 +149,17 @@ class _AuthViewState extends State<AuthView> {
                           child: Column(
                             children: [
                               Text(
-                                "SIGNUP",
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    color: isSignupScreen
-                                        ? Palette.activeColor
-                                        : Palette.textColor1),
+                                "Sign up",
+                                style: theme.textTheme.bodyLarge?.copyWith(color:!isSignupScreen
+                                    ? theme.colorScheme.surfaceVariant
+                                    : theme.colorScheme.onSurface),
                               ),
                               if (isSignupScreen)
                                 Container(
                                   margin: const EdgeInsets.only(top: 3),
                                   height: 2,
                                   width: 55,
-                                  color: Colors.orange,
+                                  color: theme.colorScheme.onInverseSurface,
                                 )
                             ],
                           ),
@@ -215,21 +207,21 @@ class _AuthViewState extends State<AuthView> {
             left: 0,
             child: Column(
               children: [
-                Text(isSignupScreen ? "Or Signup with" : "Or Login with"),
+                Text(isSignupScreen ? "Or Signup with" : "Or Login with",style: theme.textTheme.bodyMedium,),
                 Container(
                   margin: const EdgeInsets.only(right: 20, left: 20, top: 15),
-                  child: const Row(
+                  child:  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       CustomTextButton(
                         icon: Icons.facebook,
                         title: "Facebook",
-                        backgroundColor: Palette.facebookColor,
+                        backgroundColor: theme.colorScheme.primary.withOpacity(.8),
                       ),
                       CustomTextButton(
                           icon: Icons.g_mobiledata,
                           title: "Google",
-                          backgroundColor: Palette.googleColor),
+                          backgroundColor: theme.colorScheme.error),
                     ],
                   ),
                 )
