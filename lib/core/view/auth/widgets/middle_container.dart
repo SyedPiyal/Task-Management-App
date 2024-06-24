@@ -23,44 +23,52 @@ class MiddleContainer extends StatelessWidget {
       right: 0,
       left: 0,
       child: Center(
-        child: GestureDetector(
-          onTap: showShadow ? null : onSubmit,
-          child: Container(
-            height: 90,
-            width: 90,
-            padding: const EdgeInsets.all(15),
-            decoration: BoxDecoration(
-                color: theme.colorScheme.onPrimary,
-                borderRadius: BorderRadius.circular(50),
-                boxShadow: [
-                  if (showShadow)
-                    BoxShadow(
-                      color: Colors.black.withOpacity(.3),
-                      spreadRadius: 1.5,
-                      blurRadius: 10,
+        child: Material(
+          type: MaterialType.transparency,
+          elevation: 10.0,
+          color: Colors.transparent,
+          child: InkWell(
+            customBorder: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(25),
+            ),
+            onTap: showShadow ? null : onSubmit,
+            child: Container(
+              height: 90,
+              width: 90,
+              padding: const EdgeInsets.all(15),
+              decoration: BoxDecoration(
+                  color: theme.colorScheme.onPrimary,
+                  borderRadius: BorderRadius.circular(50),
+                  boxShadow: [
+                    if (showShadow)
+                      BoxShadow(
+                        color: Colors.black.withOpacity(.3),
+                        spreadRadius: 1.5,
+                        blurRadius: 10,
+                      )
+                  ]),
+              child: !showShadow
+                  ? Container(
+                      decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                              colors: [Colors.orange[200]!, Colors.red[400]!],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight),
+                          borderRadius: BorderRadius.circular(30),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.black.withOpacity(.3),
+                                spreadRadius: 1,
+                                blurRadius: 2,
+                                offset: const Offset(0, 1))
+                          ]),
+                      child: Icon(
+                        Icons.arrow_forward,
+                        color: theme.colorScheme.onPrimary,
+                      ),
                     )
-                ]),
-            child: !showShadow
-                ? Container(
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                            colors: [Colors.orange[200]!, Colors.red[400]!],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight),
-                        borderRadius: BorderRadius.circular(30),
-                        boxShadow: [
-                          BoxShadow(
-                              color: Colors.black.withOpacity(.3),
-                              spreadRadius: 1,
-                              blurRadius: 2,
-                              offset: const Offset(0, 1))
-                        ]),
-                    child: Icon(
-                      Icons.arrow_forward,
-                      color: theme.colorScheme.onPrimary,
-                    ),
-                  )
-                : const Center(),
+                  : const Center(),
+            ),
           ),
         ),
       ),

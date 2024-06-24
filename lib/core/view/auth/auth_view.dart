@@ -39,7 +39,7 @@ class _AuthViewState extends State<AuthView> {
   Widget build(BuildContext context) {
     final theme = context.theme;
     return Scaffold(
-      backgroundColor: Palette.backgroundColor,
+      backgroundColor: theme.colorScheme.onPrimary,
       body: Stack(
         children: [
           //--------------> top container for welcome text <--------------//
