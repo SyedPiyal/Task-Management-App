@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:taskmanagment/utils/extensions/context_ext.dart';
-import '../../../../utils/colors/palette.dart';
 import 'custom_textfiled.dart';
 
 class SignUpContainer extends StatelessWidget {
   final bool isMale;
   final VoidCallback onTap;
   final VoidCallback onTap1;
+  final TextEditingController? nameController;
+  final TextEditingController? emailController;
+  final TextEditingController? passwordController;
 
-  const SignUpContainer(
-      {super.key,
-      required this.isMale,
-      required this.onTap,
-      required this.onTap1});
+  const SignUpContainer({
+    super.key,
+    required this.isMale,
+    required this.onTap,
+    required this.onTap1,
+     this.nameController,
+     this.emailController,
+     this.passwordController,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,23 +27,26 @@ class SignUpContainer extends StatelessWidget {
       margin: const EdgeInsets.only(top: 20),
       child: Column(
         children: [
-          const CustomTextFiled(
+           CustomTextFiled(
             icon: Icons.account_circle,
             hintText: "User Name",
             isPassword: false,
             isEmail: false,
+            controller: nameController,
           ),
-          const CustomTextFiled(
+           CustomTextFiled(
             icon: Icons.email_outlined,
             hintText: "email",
             isPassword: false,
             isEmail: true,
+             controller: emailController,
           ),
-          const CustomTextFiled(
+           CustomTextFiled(
             icon: Icons.lock_outline,
             hintText: "password",
             isPassword: true,
             isEmail: false,
+             controller: passwordController,
           ),
           Padding(
             padding: const EdgeInsets.only(top: 10, left: 10),
@@ -52,13 +61,14 @@ class SignUpContainer extends StatelessWidget {
                         height: 30,
                         margin: const EdgeInsets.only(right: 8),
                         decoration: BoxDecoration(
-                          color:
-                              isMale ? Palette.textColor2 : Colors.transparent,
+                          color: isMale
+                              ? theme.colorScheme.onSurfaceVariant
+                              : Colors.transparent,
                           border: Border.all(
                               width: 1,
                               color: isMale
                                   ? Colors.transparent
-                                  : Palette.textColor1),
+                                  : theme.colorScheme.surfaceVariant),
                           borderRadius: BorderRadius.circular(15),
                         ),
                         child: Icon(
@@ -68,10 +78,10 @@ class SignUpContainer extends StatelessWidget {
                               : theme.colorScheme.onTertiary,
                         ),
                       ),
-                      const Text(
+                      Text(
                         "Male",
                         style: TextStyle(
-                          color: Palette.textColor1,
+                          color: theme.colorScheme.surfaceVariant,
                         ),
                       )
                     ],
@@ -89,12 +99,13 @@ class SignUpContainer extends StatelessWidget {
                         height: 30,
                         margin: const EdgeInsets.only(right: 8),
                         decoration: BoxDecoration(
-                          color:
-                              isMale ? Colors.transparent : Palette.textColor2,
+                          color: isMale
+                              ? Colors.transparent
+                              : theme.colorScheme.onSurfaceVariant,
                           border: Border.all(
                             width: 1,
                             color: isMale
-                                ? Palette.textColor1
+                                ? theme.colorScheme.surfaceVariant
                                 : Colors.transparent,
                           ),
                           borderRadius: BorderRadius.circular(15),
@@ -106,10 +117,10 @@ class SignUpContainer extends StatelessWidget {
                               : theme.colorScheme.onPrimary,
                         ),
                       ),
-                      const Text(
+                      Text(
                         "Female",
                         style: TextStyle(
-                          color: Palette.textColor1,
+                          color: theme.colorScheme.surfaceVariant,
                         ),
                       )
                     ],
@@ -130,7 +141,6 @@ class SignUpContainer extends StatelessWidget {
                   ),
                   children: [
                     TextSpan(
-                      //recognizer: ,
                       text: "term & conditions",
                       style: TextStyle(
                         color: theme.colorScheme.onInverseSurface,

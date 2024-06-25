@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:taskmanagment/core/view/home/home_view.dart';
 import 'package:taskmanagment/utils/extensions/context_ext.dart';
-import '../../../../utils/colors/palette.dart';
 import 'custom_textfiled.dart';
 
 class LoginContainer extends StatelessWidget {
   final bool isRememberMe;
   final Function() onChanged;
+  final VoidCallback? onPressed;
+  final TextEditingController? emailController;
+  final TextEditingController? passwordController;
 
   const LoginContainer(
-      {super.key, required this.isRememberMe, required this.onChanged});
+      {super.key,
+      required this.isRememberMe,
+      required this.onChanged,
+      this.emailController,
+      this.passwordController,
+      this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -19,17 +25,19 @@ class LoginContainer extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 20),
       child: Column(
         children: [
-          const CustomTextFiled(
+          CustomTextFiled(
             icon: Icons.mail_outline,
             hintText: "Enter Email",
             isPassword: false,
             isEmail: true,
+            controller: emailController,
           ),
-          const CustomTextFiled(
+          CustomTextFiled(
             icon: Icons.lock_outline,
             hintText: "**********",
             isPassword: true,
             isEmail: false,
+            controller: passwordController,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -38,7 +46,7 @@ class LoginContainer extends StatelessWidget {
                 children: [
                   Checkbox(
                     value: isRememberMe,
-                    activeColor: Palette.textColor2,
+                    activeColor: theme.colorScheme.onSurfaceVariant,
                     onChanged: (value) {
                       onChanged();
                     },
@@ -52,7 +60,7 @@ class LoginContainer extends StatelessWidget {
                 ],
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: onPressed,
                 child: Text(
                   "Forgot Password?",
                   style: theme.textTheme.labelMedium?.copyWith(

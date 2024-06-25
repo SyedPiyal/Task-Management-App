@@ -4,7 +4,6 @@ import 'package:taskmanagment/core/view/auth/widgets/login.dart';
 import 'package:taskmanagment/core/view/auth/widgets/middle_container.dart';
 import 'package:taskmanagment/core/view/auth/widgets/signup.dart';
 import 'package:taskmanagment/utils/extensions/context_ext.dart';
-import '../../../utils/colors/palette.dart';
 import '../home/home_view.dart';
 
 class AuthView extends StatefulWidget {
@@ -72,13 +71,14 @@ class _AuthViewState extends State<AuthView> {
                   ),
                   Text(
                     isSignupScreen ? "Signup to Continue" : "Login to Continue",
-                    style: theme.textTheme.bodyLarge?.copyWith(color: theme.colorScheme.onPrimary),
+                    style: theme.textTheme.bodyLarge
+                        ?.copyWith(color: theme.colorScheme.onPrimary),
                   )
                 ],
               ),
             ),
           ),
-          // Trick to add the shadow for the submit button
+          // add the shadow for the submit button
           MiddleContainer(
             showShadow: true,
             isSignupScreen: isSignupScreen,
@@ -121,14 +121,11 @@ class _AuthViewState extends State<AuthView> {
                             children: [
                               Text(
                                 "Login",
-                                style: theme.textTheme.bodyLarge?.copyWith(color:!isSignupScreen
-                                ? theme.colorScheme.onSurface
-                                    : theme.colorScheme.surfaceVariant)/*TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    color: !isSignupScreen
-                                        ? Palette.activeColor
-                                        : Palette.textColor1)*/,
+                                style: theme.textTheme.bodyLarge?.copyWith(
+                                  color: !isSignupScreen
+                                      ? theme.colorScheme.onSurface
+                                      : theme.colorScheme.surfaceVariant,
+                                ),
                               ),
                               if (!isSignupScreen)
                                 Container(
@@ -150,9 +147,10 @@ class _AuthViewState extends State<AuthView> {
                             children: [
                               Text(
                                 "Sign up",
-                                style: theme.textTheme.bodyLarge?.copyWith(color:!isSignupScreen
-                                    ? theme.colorScheme.surfaceVariant
-                                    : theme.colorScheme.onSurface),
+                                style: theme.textTheme.bodyLarge?.copyWith(
+                                    color: !isSignupScreen
+                                        ? theme.colorScheme.surfaceVariant
+                                        : theme.colorScheme.onSurface),
                               ),
                               if (isSignupScreen)
                                 Container(
@@ -200,28 +198,33 @@ class _AuthViewState extends State<AuthView> {
             isSignupScreen: isSignupScreen,
             onSubmit: _handleArrowForwardPress,
           ),
-          // Bottom buttons
+          // Bottom buttons for fb and google login
           Positioned(
             top: MediaQuery.of(context).size.height - 100,
             right: 0,
             left: 0,
             child: Column(
               children: [
-                Text(isSignupScreen ? "Or Signup with" : "Or Login with",style: theme.textTheme.bodyMedium,),
+                Text(
+                  isSignupScreen ? "Or Signup with" : "Or Login with",
+                  style: theme.textTheme.bodyMedium,
+                ),
                 Container(
                   margin: const EdgeInsets.only(right: 20, left: 20, top: 15),
-                  child:  Row(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       CustomTextButton(
                         icon: Icons.facebook,
                         title: "Facebook",
-                        backgroundColor: theme.colorScheme.primary.withOpacity(.8),
+                        backgroundColor:
+                            theme.colorScheme.primary.withOpacity(.8),
                       ),
                       CustomTextButton(
-                          icon: Icons.g_mobiledata,
-                          title: "Google",
-                          backgroundColor: theme.colorScheme.error),
+                        icon: Icons.g_mobiledata,
+                        title: "Google",
+                        backgroundColor: theme.colorScheme.error,
+                      ),
                     ],
                   ),
                 )
