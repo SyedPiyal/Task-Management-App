@@ -15,9 +15,9 @@ class SignupPage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
+            children: [
               Column(
-                children: <Widget>[
+                children: [
                   const SizedBox(height: 60.0),
                   const Text(
                     "Sign up",
@@ -36,30 +36,32 @@ class SignupPage extends StatelessWidget {
                 ],
               ),
               Column(
-                children: <Widget>[
-                  TextField(
+                children: [
+                  TextFormField(
                     decoration: InputDecoration(
-                        hintText: "Username",
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(18),
-                            borderSide: BorderSide.none),
-                        fillColor: Colors.blue.withOpacity(0.1),
-                        filled: true,
-                        prefixIcon: const Icon(Icons.person)),
+                      hintText: "Username",
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(18),
+                          borderSide: BorderSide.none),
+                      fillColor: Colors.blue.withOpacity(0.1),
+                      filled: true,
+                      prefixIcon: const Icon(Icons.person),
+                    ),
                   ),
                   const SizedBox(height: 20),
-                  TextField(
+                  TextFormField(
                     decoration: InputDecoration(
-                        hintText: "Email",
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(18),
-                            borderSide: BorderSide.none),
-                        fillColor: Colors.blue.withOpacity(0.1),
-                        filled: true,
-                        prefixIcon: const Icon(Icons.email)),
+                      hintText: "Email",
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(18),
+                          borderSide: BorderSide.none),
+                      fillColor: Colors.blue.withOpacity(0.1),
+                      filled: true,
+                      prefixIcon: const Icon(Icons.email),
+                    ),
                   ),
                   const SizedBox(height: 20),
-                  TextField(
+                  TextFormField(
                     decoration: InputDecoration(
                       hintText: "Password",
                       border: OutlineInputBorder(
@@ -72,7 +74,7 @@ class SignupPage extends StatelessWidget {
                     obscureText: true,
                   ),
                   const SizedBox(height: 20),
-                  TextField(
+                  TextFormField(
                     decoration: InputDecoration(
                       hintText: "Confirm Password",
                       border: OutlineInputBorder(
@@ -87,27 +89,30 @@ class SignupPage extends StatelessWidget {
                 ],
               ),
               Container(
-                  padding: const EdgeInsets.only(top: 3, left: 3),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                         MaterialPageRoute(
-                          builder: (context) => LoginView(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      shape: const StadiumBorder(),
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      backgroundColor: Colors.blue.shade200,
-                    ),
-                    child: const Text(
-                      "Sign up",
-                      style: TextStyle(fontSize: 20),
-                    ),
-                  )),
-              const Center(child: Text("Or")),
+                padding: const EdgeInsets.only(top: 3, left: 3),
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const LoginView(),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: const StadiumBorder(),
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    backgroundColor: Colors.blue.shade200,
+                  ),
+                  child: const Text(
+                    "Sign up",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ),
+              ),
+              const Center(
+                child: Text("Or"),
+              ),
               Container(
                 height: 45,
                 decoration: BoxDecoration(
@@ -157,11 +162,12 @@ class SignupPage extends StatelessWidget {
                 children: <Widget>[
                   const Text("Already have an account?"),
                   TextButton(
-                      onPressed: () {},
-                      child: const Text(
-                        "Login",
-                        style: TextStyle(color: Colors.blue),
-                      ))
+                    onPressed: () {},
+                    child: const Text(
+                      "Login",
+                      style: TextStyle(color: Colors.blue),
+                    ),
+                  )
                 ],
               )
             ],
