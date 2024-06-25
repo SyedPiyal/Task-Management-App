@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:taskmanagment/core/service/auth_service.dart';
-import 'package:taskmanagment/utils/sharePref/share_pref.dart';
 import 'package:taskmanagment/utils/theme/theme.dart';
 
-import 'core/view/login/login_screen.dart';
+import 'core/view/auth/auth_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,12 +13,12 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return  MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      /*theme: ThemeDataConfig.lightTheme,
-      darkTheme: ThemeDataConfig.darkTheme,*/
-      home: const LoginScreen(),
+      theme: ThemeDataConfig.lightTheme,
+      darkTheme: ThemeDataConfig.darkTheme,
+      home: const AuthView(),
     );
   }
 }
