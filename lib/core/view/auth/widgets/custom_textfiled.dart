@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:taskmanagment/utils/extensions/context_ext.dart';
 
-import '../../../../utils/colors/palette.dart';
-
 class CustomTextFiled extends StatelessWidget {
   final IconData icon;
   final String hintText;
@@ -10,11 +8,13 @@ class CustomTextFiled extends StatelessWidget {
   final bool isEmail;
   final TextEditingController? controller;
 
-  const CustomTextFiled({super.key,
-    required this.icon,
-    required this.hintText,
-    required this.isPassword,
-    required this.isEmail, this.controller});
+  const CustomTextFiled(
+      {super.key,
+      required this.icon,
+      required this.hintText,
+      required this.isPassword,
+      required this.isEmail,
+      this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class CustomTextFiled extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
       child: TextFormField(
-        controller:controller,
+        controller: controller,
         obscureText: isPassword,
         keyboardType: isEmail ? TextInputType.emailAddress : TextInputType.text,
         decoration: InputDecoration(
