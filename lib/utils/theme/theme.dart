@@ -19,7 +19,7 @@ class ThemeDataConfig {
     brightness: Brightness.light,
     textTheme: TextThemeConfig.lightTextTheme,
     colorScheme: ColorSchemeConfig.lightColorScheme,
-    scaffoldBackgroundColor: ColorSchemeConfig.lightColorScheme.background,
+    scaffoldBackgroundColor: ColorSchemeConfig.lightColorScheme.onPrimary,
 
   );
 

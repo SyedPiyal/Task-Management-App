@@ -1,101 +1,61 @@
 import 'package:flutter/material.dart';
-import 'package:taskmanagment/utils/extensions/context_ext.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
-class TaskCard extends StatelessWidget {
-  final String number;
-  final String item;
-  final Color backgrClr;
-  final Color firstCircle;
-  final Color secondCircle;
+class TodoList extends StatelessWidget {
+  const TodoList({
+    super.key,
+    required this.taskName,
 
-  const TaskCard(
-      {super.key,
-      required this.number,
-      required this.item,
-      required this.backgrClr,
-      required this.firstCircle,
-      required this.secondCircle});
+    required this.deleteFunction,
+    this.onTap,
+  });
+
+  final String taskName;
+
+  final VoidCallback? onTap;
+  final Function(BuildContext)? deleteFunction;
 
   @override
   Widget build(BuildContext context) {
-    final theme=context.theme;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: <Widget>[
-        Stack(
-          children: <Widget>[
-            Container(
-              height: 100.0,
-              width: 100.0,
-              decoration: BoxDecoration(
-                color: backgrClr,
-              ),
-            ),
-            Positioned(
-              top: 0.0,
-              right: 0.0,
-              child: Container(
-                height: 50.0,
-                width: 50.0,
-                decoration: BoxDecoration(
-                  color: firstCircle,
-                  borderRadius: const BorderRadius.only(
-                    bottomLeft: Radius.circular(60.0),
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              bottom: 0.0,
-              left: 0.0,
-              child: Container(
-                height: 50.0,
-                width: 50.0,
-                decoration: BoxDecoration(
-                  color: secondCircle,
-                  borderRadius: const BorderRadius.only(
-                    topRight: Radius.circular(60.0),
-                  ),
-                ),
-              ),
+    return Padding(
+      padding: const EdgeInsets.only(
+        top: 20,
+        left: 20,
+        right: 20,
+        bottom: 0,
+      ),
+      child: Slidable(
+        endActionPane: ActionPane(
+          motion: const StretchMotion(),
+          children: [
+            SlidableAction(
+              onPressed: deleteFunction,
+              icon: Icons.delete,
+              borderRadius: BorderRadius.circular(15),
             ),
           ],
         ),
-
-        //--------------> right side container for task details <--------------//
-
-        Flexible(
-          child: Container(
-            height: 100.0,
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            decoration:  BoxDecoration(
-              color: theme.colorScheme.secondary,
-              borderRadius: const BorderRadius.only(
-                topRight: Radius.circular(40.0),
-                bottomRight: Radius.circular(40.0),
-              ),
+        child: SizedBox(
+          width: double.infinity,
+          child: ElevatedButton(
+            onPressed: onTap,
+            style: ElevatedButton.styleFrom(
+              shape: const StadiumBorder(),
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              backgroundColor: Colors.blue.shade100,
             ),
-            child: Row(
-              children: [
-                Text(
-                  number,
-                  style: theme.textTheme.headlineLarge,
-                ),
-                const SizedBox(width: 10,),
-                Flexible(
-                  child: Text(
-                    item,
-                    style: theme.textTheme.titleMedium,
-                    overflow: TextOverflow.ellipsis,
-                    // Prevent overflow by truncating text
-                    maxLines: 1,
-                  ),
-                ),
-              ],
+            child: Text(
+              taskName,
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 18,
+                decorationColor: Colors.white,
+                decorationThickness: 2,
+              ),
             ),
           ),
         ),
-      ],
+      ),
     );
   }
 }

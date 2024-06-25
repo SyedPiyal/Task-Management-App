@@ -21,9 +21,12 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     return Scaffold(
       backgroundColor: theme.colorScheme.background,
       appBar: AppBar(
+        backgroundColor: Colors.blue,
         title: Text(
           "Add Task",
-          style: theme.textTheme.titleLarge,
+          style: theme.textTheme.titleLarge?.copyWith(
+            color: theme.colorScheme.onPrimary,
+          ),
         ),
         centerTitle: true,
       ),

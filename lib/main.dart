@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:taskmanagment/utils/theme/theme.dart';
 
-import 'core/view/auth/auth_view.dart';
+import 'core/view/auth/login_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeDataConfig.lightTheme,
       darkTheme: ThemeDataConfig.darkTheme,
-      home: const AuthView(),
+      home: const LoginView(),
     );
   }
 }
