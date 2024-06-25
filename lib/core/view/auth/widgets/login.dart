@@ -24,6 +24,7 @@ class LoginContainer extends StatelessWidget {
             hintText: "Enter Email",
             isPassword: false,
             isEmail: true,
+
           ),
           const CustomTextFiled(
             icon: Icons.lock_outline,
@@ -38,7 +39,7 @@ class LoginContainer extends StatelessWidget {
                 children: [
                   Checkbox(
                     value: isRememberMe,
-                    activeColor: Palette.textColor2,
+                    activeColor: theme.colorScheme.onSurfaceVariant,
                     onChanged: (value) {
                       onChanged();
                     },

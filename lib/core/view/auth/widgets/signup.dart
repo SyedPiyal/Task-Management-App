@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:taskmanagment/utils/extensions/context_ext.dart';
-import '../../../../utils/colors/palette.dart';
 import 'custom_textfiled.dart';
 
 class SignUpContainer extends StatelessWidget {
@@ -53,12 +52,12 @@ class SignUpContainer extends StatelessWidget {
                         margin: const EdgeInsets.only(right: 8),
                         decoration: BoxDecoration(
                           color:
-                              isMale ? Palette.textColor2 : Colors.transparent,
+                              isMale ? theme.colorScheme.onSurfaceVariant : Colors.transparent,
                           border: Border.all(
                               width: 1,
                               color: isMale
                                   ? Colors.transparent
-                                  : Palette.textColor1),
+                                  : theme.colorScheme.surfaceVariant),
                           borderRadius: BorderRadius.circular(15),
                         ),
                         child: Icon(
@@ -68,10 +67,10 @@ class SignUpContainer extends StatelessWidget {
                               : theme.colorScheme.onTertiary,
                         ),
                       ),
-                      const Text(
+                       Text(
                         "Male",
                         style: TextStyle(
-                          color: Palette.textColor1,
+                          color: theme.colorScheme.surfaceVariant,
                         ),
                       )
                     ],
@@ -90,11 +89,11 @@ class SignUpContainer extends StatelessWidget {
                         margin: const EdgeInsets.only(right: 8),
                         decoration: BoxDecoration(
                           color:
-                              isMale ? Colors.transparent : Palette.textColor2,
+                              isMale ? Colors.transparent : theme.colorScheme.onSurfaceVariant,
                           border: Border.all(
                             width: 1,
                             color: isMale
-                                ? Palette.textColor1
+                                ? theme.colorScheme.surfaceVariant
                                 : Colors.transparent,
                           ),
                           borderRadius: BorderRadius.circular(15),
@@ -106,10 +105,10 @@ class SignUpContainer extends StatelessWidget {
                               : theme.colorScheme.onPrimary,
                         ),
                       ),
-                      const Text(
+                       Text(
                         "Female",
                         style: TextStyle(
-                          color: Palette.textColor1,
+                          color: theme.colorScheme.surfaceVariant,
                         ),
                       )
                     ],

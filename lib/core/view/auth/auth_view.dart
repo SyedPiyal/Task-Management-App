@@ -4,7 +4,6 @@ import 'package:taskmanagment/core/view/auth/widgets/login.dart';
 import 'package:taskmanagment/core/view/auth/widgets/middle_container.dart';
 import 'package:taskmanagment/core/view/auth/widgets/signup.dart';
 import 'package:taskmanagment/utils/extensions/context_ext.dart';
-import '../../../utils/colors/palette.dart';
 import '../home/home_view.dart';
 
 class AuthView extends StatefulWidget {

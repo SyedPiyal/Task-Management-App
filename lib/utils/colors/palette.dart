@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/*
 class Palette{
   static const Color iconColor = Color(0xFFB6C7D1);
   static const Color activeColor = Color(0xFF09126C);
@@ -20,4 +21,4 @@ const Color kWhiteLightColor = Color(0xffF5F5F5);
 const Color kGreyLightColor = Color(0xff1d1d1d);
 const Color kTransparent = Colors.transparent;
 const Color kBlackLight = Color(0xff848484);
-const Color kGreyLight = Color(0xff9d9d9d);
+const Color kGreyLight = Color(0xff9d9d9d);*/

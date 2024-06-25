@@ -3,8 +3,9 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:taskmanagment/core/model/sign_up.dart';
-import 'package:taskmanagment/utils/constans/app_url.dart';
+import '../../utils/constans/app_url.dart';
 import '../model/login.dart';
+import '../model/login_response.dart';
 
 class AuthService {
   //--------------> method for sign up user <--------------//
@@ -23,7 +24,7 @@ class AuthService {
     }
   }
 
-  //--------------> Method for ligin user <--------------//
+  //--------------> Method for login user <--------------//
 
   Future<UserData> loginService(Login login) async {
     final response = await http.post(
@@ -36,7 +37,7 @@ class AuthService {
     if (response.statusCode == 200) {
       var responseBody = jsonDecode(response.body);
       UserData userData = UserData.fromJson(responseBody);
-      await _saveToken(userData.token??"");
+      await _saveToken(userData.token ?? "");
       return userData;
     } else {
       print('Failed:${response.body}');

@@ -8,21 +8,24 @@ class CustomTextFiled extends StatelessWidget {
   final String hintText;
   final bool isPassword;
   final bool isEmail;
+  final TextEditingController? controller;
 
   const CustomTextFiled(
       {super.key,
       required this.icon,
       required this.hintText,
       required this.isPassword,
-      required this.isEmail});
+      required this.isEmail,
+      this.controller});
 
   @override
   Widget build(BuildContext context) {
     final theme = context.theme;
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
-      child: TextField(
+      child: TextFormField(
         obscureText: isPassword,
+        controller: controller,
         keyboardType: isEmail ? TextInputType.emailAddress : TextInputType.text,
         decoration: InputDecoration(
           prefixIcon: Icon(
