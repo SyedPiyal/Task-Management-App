@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:taskmanagment/utils/extensions/context_ext.dart';
 
-import '../../../../utils/colors/palette.dart';
-
 class CustomTextFiled extends StatelessWidget {
   final IconData icon;
   final String hintText;

@@ -6,12 +6,19 @@ class SignUpContainer extends StatelessWidget {
   final bool isMale;
   final VoidCallback onTap;
   final VoidCallback onTap1;
+  final TextEditingController? nameController;
+  final TextEditingController? emailController;
+  final TextEditingController? passwordController;
 
-  const SignUpContainer(
-      {super.key,
-      required this.isMale,
-      required this.onTap,
-      required this.onTap1});
+  const SignUpContainer({
+    super.key,
+    required this.isMale,
+    required this.onTap,
+    required this.onTap1,
+     this.nameController,
+     this.emailController,
+     this.passwordController,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,23 +27,26 @@ class SignUpContainer extends StatelessWidget {
       margin: const EdgeInsets.only(top: 20),
       child: Column(
         children: [
-          const CustomTextFiled(
+           CustomTextFiled(
             icon: Icons.account_circle,
             hintText: "User Name",
             isPassword: false,
             isEmail: false,
+            controller: nameController,
           ),
-          const CustomTextFiled(
+           CustomTextFiled(
             icon: Icons.email_outlined,
             hintText: "email",
             isPassword: false,
             isEmail: true,
+             controller: emailController,
           ),
-          const CustomTextFiled(
+           CustomTextFiled(
             icon: Icons.lock_outline,
             hintText: "password",
             isPassword: true,
             isEmail: false,
+             controller: passwordController,
           ),
           Padding(
             padding: const EdgeInsets.only(top: 10, left: 10),
@@ -51,8 +61,9 @@ class SignUpContainer extends StatelessWidget {
                         height: 30,
                         margin: const EdgeInsets.only(right: 8),
                         decoration: BoxDecoration(
-                          color:
-                              isMale ? theme.colorScheme.onSurfaceVariant : Colors.transparent,
+                          color: isMale
+                              ? theme.colorScheme.onSurfaceVariant
+                              : Colors.transparent,
                           border: Border.all(
                               width: 1,
                               color: isMale
@@ -67,7 +78,7 @@ class SignUpContainer extends StatelessWidget {
                               : theme.colorScheme.onTertiary,
                         ),
                       ),
-                       Text(
+                      Text(
                         "Male",
                         style: TextStyle(
                           color: theme.colorScheme.surfaceVariant,
@@ -88,8 +99,9 @@ class SignUpContainer extends StatelessWidget {
                         height: 30,
                         margin: const EdgeInsets.only(right: 8),
                         decoration: BoxDecoration(
-                          color:
-                              isMale ? Colors.transparent : theme.colorScheme.onSurfaceVariant,
+                          color: isMale
+                              ? Colors.transparent
+                              : theme.colorScheme.onSurfaceVariant,
                           border: Border.all(
                             width: 1,
                             color: isMale
@@ -105,7 +117,7 @@ class SignUpContainer extends StatelessWidget {
                               : theme.colorScheme.onPrimary,
                         ),
                       ),
-                       Text(
+                      Text(
                         "Female",
                         style: TextStyle(
                           color: theme.colorScheme.surfaceVariant,
@@ -129,7 +141,6 @@ class SignUpContainer extends StatelessWidget {
                   ),
                   children: [
                     TextSpan(
-                      //recognizer: ,
                       text: "term & conditions",
                       style: TextStyle(
                         color: theme.colorScheme.onInverseSurface,
