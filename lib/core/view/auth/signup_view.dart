@@ -3,6 +3,8 @@ import 'package:taskmanagment/core/model/signup.dart';
 import 'package:taskmanagment/core/service/auth_service.dart';
 import 'package:taskmanagment/core/view/auth/login_view.dart';
 
+import '../../common/custom_textFormField.dart';
+
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
 
@@ -115,72 +117,17 @@ class _SignupPageState extends State<SignupPage> {
                   ],
                 ),
                 Container(
-                    padding: const EdgeInsets.only(top: 3, left: 3),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const LoginView(),
-                          ),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        shape: const StadiumBorder(),
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        backgroundColor: Colors.blue.shade200,
-                      ),
-                      child: const Text(
-                        "Sign up",
-                        style: TextStyle(fontSize: 20),
-                      ),
-                    )),
-                const Center(
-                  child: Text("Or"),
-                ),
-                Container(
-                  height: 45,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(25),
-                    border: Border.all(
-                      color: Colors.blue,
+                  padding: const EdgeInsets.only(top: 3, left: 3),
+                  child: ElevatedButton(
+                    onPressed: _signUpUser,
+                    style: ElevatedButton.styleFrom(
+                      shape: const StadiumBorder(),
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      backgroundColor: Colors.blue.shade200,
                     ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.white.withOpacity(0.5),
-                        spreadRadius: 1,
-                        blurRadius: 1,
-                        offset:
-                            const Offset(0, 1), // changes position of shadow
-                      ),
-                    ],
-                  ),
-                  child: TextButton(
-                    onPressed: () {},
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: 30.0,
-                          width: 30.0,
-                          decoration: const BoxDecoration(
-                            image: DecorationImage(
-                                image: AssetImage(
-                                  'assets/images/login_signup/google.png',
-                                ),
-                                fit: BoxFit.cover),
-                            shape: BoxShape.circle,
-                          ),
-                        ),
-                        const SizedBox(width: 18),
-                        const Text(
-                          "Sign In with Google",
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.blue,
-                          ),
-                        ),
-                      ],
+                    child: const Text(
+                      "Sign up",
+                      style: TextStyle(fontSize: 20),
                     ),
                   ),
                 ),
@@ -189,7 +136,14 @@ class _SignupPageState extends State<SignupPage> {
                   children: <Widget>[
                     const Text("Already have an account?"),
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                             MaterialPageRoute(
+                              builder: (context) => LoginView(),
+                            ),
+                          );
+                        },
                         child: const Text(
                           "Login",
                           style: TextStyle(color: Colors.blue),

@@ -22,13 +22,13 @@ class CustomTextFormField extends StatelessWidget {
       keyboardType: keyboardType,
       obscureText: obscureText ?? false,
       decoration: InputDecoration(
-        hintText: "Username",
+        hintText: hintText,
         border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(18),
             borderSide: BorderSide.none),
         fillColor: Colors.blue.withOpacity(0.1),
         filled: true,
-        prefixIcon: const Icon(Icons.person),
+        prefixIcon: prefixIcon,
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {

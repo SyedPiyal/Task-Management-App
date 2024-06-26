@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:taskmanagment/core/view/auth/signup_view.dart';
 import 'package:taskmanagment/utils/extensions/context_ext.dart';
-
 import '../../common/custom_textFormField.dart';
+import '../../model/login.dart';
+import '../../service/auth_service.dart';
 import '../home/home_view.dart';
 
 class LoginView extends StatefulWidget {
@@ -14,17 +15,17 @@ class LoginView extends StatefulWidget {
 
 class _LoginViewState extends State<LoginView> {
   final _formKey = GlobalKey<FormState>();
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
 
   final AuthService _authService = AuthService();
 
   void _login() async {
     if (_formKey.currentState!.validate()) {
-      Login loginData =
-          Login(email: emailController.text, password: passwordController.text);
+      Login loginData = Login(
+          email: _emailController.text, password: _passwordController.text);
       try {
-        UserData userData = await _authService.loginService(loginData);
+        await _authService.loginService(loginData);
 
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -72,14 +73,14 @@ class _LoginViewState extends State<LoginView> {
                   ),
                 ),
                 const Padding(
-                  padding: EdgeInsets.only(top: 20, bottom: 10, left: 35),
+                  padding: EdgeInsets.only(top: 25, bottom: 15, left: 35),
                   child: Text("Enter your credential to login"),
                 ),
                 CustomTextFormField(
-                  controller: _userNameController,
+                  controller: _emailController,
                   keyboardType: TextInputType.name,
-                  hintText: "UserName",
-                  prefixIcon: const Icon(Icons.person),
+                  hintText: "Email",
+                  prefixIcon: const Icon(Icons.email_outlined),
                 ),
                 const SizedBox(height: 10),
                 CustomTextFormField(
@@ -90,14 +91,7 @@ class _LoginViewState extends State<LoginView> {
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const HomePage(),
-                      ),
-                    );
-                  },
+                  onPressed: _login,
                   style: ElevatedButton.styleFrom(
                     shape: const StadiumBorder(),
                     padding: const EdgeInsets.symmetric(vertical: 16),
@@ -120,7 +114,14 @@ class _LoginViewState extends State<LoginView> {
                   children: [
                     const Text("Don't have an account? "),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SignupPage(),
+                          ),
+                        );
+                      },
                       child: const Text(
                         "Sign Up",
                         style: TextStyle(color: Colors.blue),
