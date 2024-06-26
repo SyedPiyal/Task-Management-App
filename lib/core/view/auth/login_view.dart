@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:taskmanagment/core/model/login.dart';
-import 'package:taskmanagment/core/model/login_response.dart';
-import 'package:taskmanagment/core/service/auth_service.dart';
 import 'package:taskmanagment/core/view/auth/signup_view.dart';
 import 'package:taskmanagment/utils/extensions/context_ext.dart';
 
+import '../../common/custom_textFormField.dart';
 import '../home/home_view.dart';
 
 class LoginView extends StatefulWidget {
@@ -77,47 +75,29 @@ class _LoginViewState extends State<LoginView> {
                   padding: EdgeInsets.only(top: 20, bottom: 10, left: 35),
                   child: Text("Enter your credential to login"),
                 ),
-                TextFormField(
-                  controller: emailController,
-                  decoration: InputDecoration(
-                    hintText: "Username",
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(18),
-                        borderSide: BorderSide.none),
-                    fillColor: Colors.blue.withOpacity(0.1),
-                    filled: true,
-                    prefixIcon: const Icon(Icons.person),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-                    return null;
-                  },
+                CustomTextFormField(
+                  controller: _userNameController,
+                  keyboardType: TextInputType.name,
+                  hintText: "UserName",
+                  prefixIcon: const Icon(Icons.person),
                 ),
                 const SizedBox(height: 10),
-                TextFormField(
-                  controller: passwordController,
-                  decoration: InputDecoration(
-                    hintText: "Password",
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(18),
-                        borderSide: BorderSide.none),
-                    fillColor: Colors.blue.withOpacity(0.1),
-                    filled: true,
-                    prefixIcon: const Icon(Icons.password),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-                    return null;
-                  },
-                  obscureText: true,
+                CustomTextFormField(
+                  controller: _passwordController,
+                  keyboardType: TextInputType.text,
+                  hintText: "Password",
+                  prefixIcon: const Icon(Icons.password),
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
-                  onPressed: _login,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const HomePage(),
+                      ),
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     shape: const StadiumBorder(),
                     padding: const EdgeInsets.symmetric(vertical: 16),
@@ -140,14 +120,7 @@ class _LoginViewState extends State<LoginView> {
                   children: [
                     const Text("Don't have an account? "),
                     TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const SignupPage(),
-                          ),
-                        );
-                      },
+                      onPressed: () {},
                       child: const Text(
                         "Sign Up",
                         style: TextStyle(color: Colors.blue),

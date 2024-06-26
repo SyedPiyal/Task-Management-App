@@ -62,9 +62,9 @@ class _SignupPageState extends State<SignupPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
+              children: <Widget>[
                 Column(
-                  children: [
+                  children: <Widget>[
                     const SizedBox(height: 60.0),
                     const Text(
                       "Sign up",
@@ -84,100 +84,57 @@ class _SignupPageState extends State<SignupPage> {
                 ),
                 Column(
                   children: [
-                    TextFormField(
+                    CustomTextFormField(
                       controller: _firstNameController,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return "Please Enter Some Text";
-                        }
-                        return null;
-                      },
-                      decoration: InputDecoration(
-                        hintText: "First Name",
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(18),
-                            borderSide: BorderSide.none),
-                        fillColor: Colors.blue.withOpacity(0.1),
-                        filled: true,
-                        prefixIcon: const Icon(Icons.person),
-                      ),
+                      keyboardType: TextInputType.name,
+                      hintText: "First Name",
+                      prefixIcon: const Icon(Icons.person),
                     ),
                     const SizedBox(height: 20),
-                    TextFormField(
+                    CustomTextFormField(
                       controller: _lastNameController,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return "Please Enter Some Text";
-                        }
-                        return null;
-                      },
-                      decoration: InputDecoration(
-                        hintText: "Last Name",
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(18),
-                            borderSide: BorderSide.none),
-                        fillColor: Colors.blue.withOpacity(0.1),
-                        filled: true,
-                        prefixIcon: const Icon(Icons.person),
-                      ),
+                      keyboardType: TextInputType.name,
+                      hintText: "Last Name",
+                      prefixIcon: const Icon(Icons.person),
                     ),
                     const SizedBox(height: 20),
-                    TextFormField(
+                    CustomTextFormField(
                       controller: _emailController,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return "Please Enter Some Text";
-                        }
-                        return null;
-                      },
-                      decoration: InputDecoration(
-                        hintText: "Email",
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(18),
-                            borderSide: BorderSide.none),
-                        fillColor: Colors.blue.withOpacity(0.1),
-                        filled: true,
-                        prefixIcon: const Icon(Icons.email),
-                      ),
-                      obscureText: false,
+                      keyboardType: TextInputType.emailAddress,
+                      hintText: "Email",
+                      prefixIcon: const Icon(Icons.email),
                     ),
                     const SizedBox(height: 20),
-                    TextFormField(
+                    CustomTextFormField(
                       controller: _passwordController,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return "Please Enter Some Text";
-                        }
-                        return null;
-                      },
-                      decoration: InputDecoration(
-                        hintText: "Password",
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(18),
-                            borderSide: BorderSide.none),
-                        fillColor: Colors.blue.withOpacity(0.1),
-                        filled: true,
-                        prefixIcon: const Icon(Icons.password),
-                      ),
+                      keyboardType: TextInputType.text,
+                      hintText: "Password",
+                      prefixIcon: const Icon(Icons.password),
                       obscureText: true,
                     ),
                   ],
                 ),
                 Container(
-                  padding: const EdgeInsets.only(top: 3, left: 3),
-                  child: ElevatedButton(
-                    onPressed: _signUpUser,
-                    style: ElevatedButton.styleFrom(
-                      shape: const StadiumBorder(),
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      backgroundColor: Colors.blue.shade200,
-                    ),
-                    child: const Text(
-                      "Sign up",
-                      style: TextStyle(fontSize: 20),
-                    ),
-                  ),
-                ),
+                    padding: const EdgeInsets.only(top: 3, left: 3),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const LoginView(),
+                          ),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        shape: const StadiumBorder(),
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        backgroundColor: Colors.blue.shade200,
+                      ),
+                      child: const Text(
+                        "Sign up",
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    )),
                 const Center(
                   child: Text("Or"),
                 ),
@@ -209,7 +166,8 @@ class _SignupPageState extends State<SignupPage> {
                           decoration: const BoxDecoration(
                             image: DecorationImage(
                                 image: AssetImage(
-                                    'assets/images/login_signup/google.png'),
+                                  'assets/images/login_signup/google.png',
+                                ),
                                 fit: BoxFit.cover),
                             shape: BoxShape.circle,
                           ),
@@ -231,12 +189,11 @@ class _SignupPageState extends State<SignupPage> {
                   children: <Widget>[
                     const Text("Already have an account?"),
                     TextButton(
-                      onPressed: () {},
-                      child: const Text(
-                        "Login",
-                        style: TextStyle(color: Colors.blue),
-                      ),
-                    )
+                        onPressed: () {},
+                        child: const Text(
+                          "Login",
+                          style: TextStyle(color: Colors.blue),
+                        ))
                   ],
                 )
               ],
