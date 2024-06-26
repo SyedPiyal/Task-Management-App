@@ -9,6 +9,7 @@ import '../model/login.dart';
 import '../model/login_response.dart';
 
 class AuthService {
+
   //--------------> method for sign up user <--------------//
   Future<SignupResponse> signUpService(SignupModel signUpModel) async {
     final response = await http.post(
@@ -31,10 +32,12 @@ class AuthService {
   //--------------> Method for login user <--------------//
 
   Future<UserData> loginService(Login login) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
     final response = await http.post(
       Uri.parse(AppUrl.login),
       headers: {
         'Content-Type': 'application/json',
+        //"token":  pref.getString('auth_token').toString()
       },
       body: jsonEncode(login.toJson()),
     );

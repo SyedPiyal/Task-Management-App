@@ -88,6 +88,7 @@ class _LoginViewState extends State<LoginView> {
                   keyboardType: TextInputType.text,
                   hintText: "Password",
                   prefixIcon: const Icon(Icons.password),
+                  obscureText: true,
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
@@ -118,7 +119,7 @@ class _LoginViewState extends State<LoginView> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => SignupPage(),
+                            builder: (context) => const SignupPage(),
                           ),
                         );
                       },

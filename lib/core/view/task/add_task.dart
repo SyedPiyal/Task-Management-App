@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:taskmanagment/core/view/task/widgets/custom_textfromfield.dart';
 import 'package:taskmanagment/utils/extensions/context_ext.dart';
 
+import '../../model/task_list.dart';
+
 class AddTaskScreen extends StatefulWidget {
+  final TaskData? taskData;
   const AddTaskScreen({
-    super.key,
+    super.key, this.taskData,
   });
 
   @override
@@ -12,6 +15,16 @@ class AddTaskScreen extends StatefulWidget {
 }
 
 class _AddTaskScreenState extends State<AddTaskScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      titleController.text = widget.taskData?.title??"";
+      descriptionController.text = widget.taskData?.description??"";
+    });
+
+  }
+
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
 
@@ -22,6 +35,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
       backgroundColor: theme.colorScheme.background,
       appBar: AppBar(
         backgroundColor: Colors.blue,
+        foregroundColor: Colors.white,
         title: Text(
           "Add Task",
           style: theme.textTheme.titleLarge?.copyWith(
