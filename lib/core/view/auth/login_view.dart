@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:taskmanagment/core/model/login.dart';
 import 'package:taskmanagment/core/model/login_response.dart';
 import 'package:taskmanagment/core/service/auth_service.dart';
+import 'package:taskmanagment/core/view/auth/signup_view.dart';
 import 'package:taskmanagment/utils/extensions/context_ext.dart';
 
 import '../home/home_view.dart';
@@ -139,7 +140,14 @@ class _LoginViewState extends State<LoginView> {
                   children: [
                     const Text("Don't have an account? "),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SignupPage(),
+                          ),
+                        );
+                      },
                       child: const Text(
                         "Sign Up",
                         style: TextStyle(color: Colors.blue),

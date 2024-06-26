@@ -1,5 +1,5 @@
 
-class SignUpModel {
+class SignupModel {
   String? email;
   String? firstName;
   String? lastName;
@@ -7,7 +7,7 @@ class SignUpModel {
   String? password;
   String? photo;
 
-  SignUpModel({
+  SignupModel({
     this.email,
     this.firstName,
     this.lastName,
@@ -16,7 +16,7 @@ class SignUpModel {
     this.photo,
   });
 
-  factory SignUpModel.fromJson(Map<String, dynamic> json) => SignUpModel(
+  factory SignupModel.fromJson(Map<String, dynamic> json) => SignupModel(
     email: json["email"],
     firstName: json["firstName"],
     lastName: json["lastName"],

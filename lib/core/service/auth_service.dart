@@ -2,14 +2,15 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:taskmanagment/core/model/sign_up.dart';
+import 'package:taskmanagment/core/model/signup.dart';
+import 'package:taskmanagment/core/model/signup_response.dart';
 import '../../utils/constans/app_url.dart';
 import '../model/login.dart';
 import '../model/login_response.dart';
 
 class AuthService {
   //--------------> method for sign up user <--------------//
-  Future<void> signUpService(SignUpModel signUpModel) async {
+  Future<SignupResponse> signUpService(SignupModel signUpModel) async {
     final response = await http.post(
       Uri.parse(AppUrl.register),
       headers: {
@@ -18,9 +19,12 @@ class AuthService {
       body: jsonEncode(signUpModel.toJson()),
     );
     if (response.statusCode == 200) {
-      print("SuccessFull");
+      var responseBody = jsonDecode(response.body);
+      SignupResponse signupResponse = SignupResponse.fromJson(responseBody);
+      return signupResponse;
     } else {
       print('failed to register:${response.body}');
+      throw Exception('Failed To signUp');
     }
   }
 
