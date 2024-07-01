@@ -15,8 +15,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // for future builder ----------------------
-  // Future<TaskListResponse>? _taskListFuture;
+
 
   List<TaskData> _taskList = [];
   bool _isLoading = true;
@@ -61,17 +60,30 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  List toDoList = [
-    ['Swim', true],
-    ['Learn Flutter', true],
-    ['Drink Coffee', false],
-    ['Explore Firebase', false],
-  ];
+  void _deleteTask(String taskId) async {
+    try {
+      String? token = await _authService.getToken();
+      if (token != null) {
+        var deleteResponse = await _taskService.deleteTask(taskId, token);
+        if (deleteResponse.status == 'success') {
+          setState(() {
+            _taskList.removeWhere((task) => task.id == taskId);
+          });
+        } else {
+          _showErrorSnackbar('Failed to delete task');
+        }
+      } else {
+        _showErrorSnackbar('No token found');
+      }
+    } catch (e) {
+      _showErrorSnackbar('Error: $e');
+    }
+  }
 
-  void deleteTask(int index) {
-    setState(() {
-      toDoList.removeAt(index);
-    });
+  void _showErrorSnackbar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
+    );
   }
 
   @override
@@ -113,47 +125,12 @@ class _HomePageState extends State<HomePage> {
                               ),
                             );
                           },
-                          deleteFunction: (contex) => deleteTask(index),
+                          deleteFunction: (contex) => _deleteTask(task.id!),
                         );
                       },
                     ),
 
-      // use future builder ----------------------
 
-      /*FutureBuilder<TaskListResponse>(
-        future: _taskListFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else if (!snapshot.hasData || snapshot.data!.data!.isEmpty) {
-            return const Center(child: Text('No tasks available'));
-          } else {
-            List<TaskData> tasks = snapshot.data!.data!;
-            return ListView.builder(
-              itemCount: tasks.length,
-              itemBuilder: (BuildContext context, index) {
-                TaskData task = tasks[index];
-                return TodoList(
-                  taskName: task.title ?? "NO Title",
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => AddTaskScreen(
-                          taskData: task,
-                        ),
-                      ),
-                    );
-                  },
-                  deleteFunction: (contex) => deleteTask(index),
-                );
-              },
-            );
-          }
-        },
-      ),*/
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
