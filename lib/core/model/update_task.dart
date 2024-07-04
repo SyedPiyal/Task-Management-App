@@ -1,5 +1,3 @@
-
-
 class UpdateTask {
   String? status;
   Data? data;

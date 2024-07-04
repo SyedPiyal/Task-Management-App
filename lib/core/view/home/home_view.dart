@@ -115,8 +115,8 @@ class _HomePageState extends State<HomePage> {
                         TaskData task = _taskList[index];
                         return TodoList(
                           taskName: task.title ?? "NO Title",
-                          onTap: () {
-                            Navigator.push(
+                          onTap: () async {
+                            final result = await Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => AddTaskScreen(
@@ -124,6 +124,10 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                             );
+
+                            if (result == true) {
+                              _loadTasks(); // Reload the task list
+                            }
                           },
                           deleteFunction: (contex) => _deleteTask(task.id!),
                         );
@@ -132,13 +136,17 @@ class _HomePageState extends State<HomePage> {
 
 
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
+        onPressed: () async {
+          final result = await Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => const AddTaskScreen(),
             ),
           );
+
+          if (result == true) {
+            _loadTasks(); // Reload the task list
+          }
         },
         child: Icon(
           Icons.add,

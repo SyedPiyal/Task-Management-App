@@ -22,6 +22,7 @@ class AddTaskScreen extends StatefulWidget {
 class _AddTaskScreenState extends State<AddTaskScreen> {
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
+  final statusController = TextEditingController(); // New controller for status
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
 
@@ -43,17 +44,28 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
       try {
         String? token = await _authService.getToken();
         if (token != null) {
-          CreateTaskModel newTask = CreateTaskModel(
+          CreateTaskModel task = CreateTaskModel(
             title: titleController.text,
             description: descriptionController.text,
-            status: 'Pending',
+            status: statusController.text.isEmpty ? 'Pending' : statusController.text, // Default to 'Pending' if empty
           );
 
-          var response = await _taskService.createTask(newTask, token);
-          if (response.status == 'success') {
-            Navigator.of(context).pop(true); // True for successfully added
+          if (widget.taskData == null) {
+            // Creating a new task
+            var response = await _taskService.createTask(task, token);
+            if (response.status == 'success') {
+              Navigator.of(context).pop(true); // True indicates success
+            } else {
+              _showErrorSnackbar('Failed to create task');
+            }
           } else {
-            _showErrorSnackbar('Failed to create task');
+            // Updating an existing task
+            var response = await _taskService.updateTask(task, token, widget.taskData!.id!);
+            if (response.status == 'success') {
+              Navigator.of(context).pop(true); // True indicates success
+            } else {
+              _showErrorSnackbar('Failed to update task');
+            }
           }
         } else {
           _showErrorSnackbar('No token found');
@@ -74,6 +86,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       titleController.text = widget.taskData?.title ?? "";
       descriptionController.text = widget.taskData?.description ?? "";
+      statusController.text = widget.taskData?.status ?? "New"; // Pre-fill status if editing
     });
   }
 
@@ -81,6 +94,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   void dispose() {
     titleController.dispose();
     descriptionController.dispose();
+    statusController.dispose();
     super.dispose();
   }
 
@@ -93,7 +107,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
         backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
         title: Text(
-          "Add Task",
+          widget.taskData == null ? "Add Task" : "Edit Task", // Change title based on action
           style: theme.textTheme.titleLarge?.copyWith(
             color: theme.colorScheme.onPrimary,
           ),
@@ -103,43 +117,50 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    TextFormField(
-                      controller: titleController,
-                      decoration: const InputDecoration(labelText: 'Title'),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter a title';
-                        }
-                        return null;
-                      },
-                    ),
-                    TextFormField(
-                      controller: descriptionController,
-                      decoration:
-                          const InputDecoration(labelText: 'Description'),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter a description';
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: 20),
-                  ],
-                ),
+        padding: const EdgeInsets.all(16.0),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              TextFormField(
+                controller: titleController,
+                decoration: const InputDecoration(labelText: 'Title'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a title';
+                  }
+                  return null;
+                },
               ),
-            ),
+              TextFormField(
+                controller: descriptionController,
+                decoration: const InputDecoration(labelText: 'Description'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a description';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                controller: statusController, // New TextFormField for status
+                decoration: const InputDecoration(labelText: 'Status'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a status';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 20),
+            ],
+          ),
+        ),
+      ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(10),
         child: ElevatedButton(
-          onPressed: () {
-            _submitTask;
-          },
+          onPressed: _submitTask,
           style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),

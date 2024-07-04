@@ -7,4 +7,5 @@ class AppUrl {
   static const String taskList = "$baseURL/listTaskByStatus/New";
   static const String deleteTask = "$baseURL/deleteTask/id";
   static const String addTask = "$baseURL/createTask";
+  static const String updateTask = "$baseURL/updateTaskStatus/62b7582fac0007cc76c29b53/New";
 }

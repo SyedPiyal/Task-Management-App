@@ -7,13 +7,12 @@ import '../model/delete_task.dart';
 import '../model/task_list.dart';
 
 class TaskService {
-
   Future<TaskListResponse> fetchTasks(String token) async {
     final response = await http.get(
       Uri.parse(AppUrl.taskList),
       headers: {
         'Content-Type': 'application/json',
-        'Accept':'application/json',
+        'Accept': 'application/json',
         'token': token,
       },
     );
@@ -27,15 +26,13 @@ class TaskService {
     }
   }
 
-
-
   //--------------> delete task <--------------//
   Future<DeleteTaskResponse> deleteTask(String taskId, String token) async {
     final response = await http.delete(
       Uri.parse(AppUrl.deleteTask),
       headers: {
         'Content-Type': 'application/json',
-        'Accept':'application/json',
+        'Accept': 'application/json',
         'token': token,
       },
     );
@@ -47,9 +44,9 @@ class TaskService {
     }
   }
 
-
   //--------------> add task <--------------//
-  Future<CreateTaskResponse> createTask(CreateTaskModel task, String token) async {
+  Future<CreateTaskResponse> createTask(
+      CreateTaskModel task, String token) async {
     final response = await http.post(
       Uri.parse(AppUrl.addTask),
       headers: {
@@ -59,10 +56,52 @@ class TaskService {
       body: jsonEncode(task.toJson()),
     );
 
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
       return CreateTaskResponse.fromJson(jsonDecode(response.body));
     } else {
       throw Exception('Failed to create task');
     }
   }
+
+  //--------------> update task <--------------//
+
+/*  Future<CreateTaskResponse> updateTask(
+      CreateTaskModel task, String token, String taskId) async {
+    final response = await http.put(
+      Uri.parse('${AppUrl.updateTask}/$taskId'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'token': token,
+      },
+      body: jsonEncode(task.toJson()),
+    );
+
+    if (response.statusCode == 200) {
+      return CreateTaskResponse.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to update task');
+    }
+  }*/
+
+  // In your TaskService class
+
+  Future<CreateTaskResponse> updateTask(
+      CreateTaskModel task, String token, String taskId) async {
+    final response = await http.put(
+      Uri.parse('${AppUrl.updateTask}/$taskId'), // Ensure this URL matches your API
+      headers: {
+        'token': token,
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(task.toJson()),
+    );
+
+    if (response.statusCode == 200) { // Assuming 200 is the success status code
+      return CreateTaskResponse.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to update task');
+    }
+  }
+
 }
