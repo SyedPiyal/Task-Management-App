@@ -1,5 +1,5 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:taskmanagment/core/view/task/widgets/custom_textfromfield.dart';
 import 'package:taskmanagment/utils/extensions/context_ext.dart';
 
 import '../../model/create_task.dart';
@@ -22,7 +22,7 @@ class AddTaskScreen extends StatefulWidget {
 class _AddTaskScreenState extends State<AddTaskScreen> {
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
-  final statusController = TextEditingController(); // New controller for status
+  final statusController = TextEditingController(); // Controller for status
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
 

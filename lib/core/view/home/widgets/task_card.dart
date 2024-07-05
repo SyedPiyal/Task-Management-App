@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
+
+
 class TodoList extends StatelessWidget {
   const TodoList({
     super.key,
     required this.taskName,
-
+    required this.taskId, // Add taskId as a required parameter
     required this.deleteFunction,
     this.onTap,
   });
 
   final String taskName;
-
+  final String taskId; // Add taskId field
   final VoidCallback? onTap;
-  final Function(BuildContext)? deleteFunction;
+  final Function(BuildContext, String)? deleteFunction; // Update to accept taskId
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +31,11 @@ class TodoList extends StatelessWidget {
           motion: const StretchMotion(),
           children: [
             SlidableAction(
-              onPressed: deleteFunction,
+              onPressed: (context) {
+                if (deleteFunction != null) {
+                  deleteFunction!(context, taskId); // Pass the taskId here
+                }
+              },
               icon: Icons.delete,
               borderRadius: BorderRadius.circular(15),
             ),
@@ -59,3 +65,4 @@ class TodoList extends StatelessWidget {
     );
   }
 }
+

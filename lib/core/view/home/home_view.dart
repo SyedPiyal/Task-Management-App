@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:taskmanagment/core/view/home/widgets/task_card.dart';
 import 'package:taskmanagment/utils/extensions/context_ext.dart';
-
+import '../../model/delete_task.dart';
 import '../../model/task_list.dart';
 import '../../service/auth_service.dart';
 import '../../service/task_service.dart';
@@ -15,8 +15,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
-
   List<TaskData> _taskList = [];
   bool _isLoading = true;
   String? _errorMessage;
@@ -41,11 +39,6 @@ class _HomePageState extends State<HomePage> {
           _taskList = listResponse.data ?? [];
           _isLoading = false;
         });
-
-        // for future builder ----------------------
-        /*setState(() {
-        _taskListFuture = _taskService.fetchTasks(token);
-      });*/
       } else {
         setState(() {
           _errorMessage = 'No token found';
@@ -60,12 +53,17 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void _deleteTask(String taskId) async {
+  Future<void> _deleteTask(String taskId) async {
+    setState(() {
+      _isLoading = true; // Start loading before deleting
+    });
+
     try {
       String? token = await _authService.getToken();
       if (token != null) {
-        var deleteResponse = await _taskService.deleteTask(taskId, token);
-        if (deleteResponse.status == 'success') {
+        DeleteTaskResponse response =
+            await _taskService.deleteTask(taskId, token);
+        if (response.status == 'success') {
           setState(() {
             _taskList.removeWhere((task) => task.id == taskId);
           });
@@ -76,7 +74,11 @@ class _HomePageState extends State<HomePage> {
         _showErrorSnackbar('No token found');
       }
     } catch (e) {
-      _showErrorSnackbar('Error: $e');
+      _showErrorSnackbar('Error: ${e.toString()}');
+    } finally {
+      setState(() {
+        _isLoading = false; // Stop loading after the deletion process
+      });
     }
   }
 
@@ -115,6 +117,7 @@ class _HomePageState extends State<HomePage> {
                         TaskData task = _taskList[index];
                         return TodoList(
                           taskName: task.title ?? "NO Title",
+                          taskId: task.id ?? "", // Pass the taskId here
                           onTap: () async {
                             final result = await Navigator.push(
                               context,
@@ -129,12 +132,11 @@ class _HomePageState extends State<HomePage> {
                               _loadTasks(); // Reload the task list
                             }
                           },
-                          deleteFunction: (contex) => _deleteTask(task.id!),
+                          deleteFunction: (context, taskId) =>
+                              _deleteTask(taskId),
                         );
                       },
                     ),
-
-
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           final result = await Navigator.push(
