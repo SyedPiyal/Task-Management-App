@@ -60,7 +60,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
             }
           } else {
             // Updating an existing task
-            var response = await _taskService.updateTask(task, token, widget.taskData!.id!);
+            var response = await _taskService.updateTask(widget.taskData!.id!,token);
             if (response.status == 'success') {
               Navigator.of(context).pop(true); // True indicates success
             } else {
