@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:taskmanagment/core/model/signup.dart';
-import 'package:taskmanagment/core/service/auth_service.dart';
 import 'package:taskmanagment/core/view/auth/login_view.dart';
 
 import '../../common/custom_textFormField.dart';
+import '../../provider/auth_provider.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -18,7 +19,6 @@ class _SignupPageState extends State<SignupPage> {
   final _lastNameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  final AuthService _authService = AuthService();
 
   void _signUpUser() async {
     if (_formKey.currentState!.validate()) {
@@ -28,31 +28,15 @@ class _SignupPageState extends State<SignupPage> {
         email: _emailController.text,
         password: _passwordController.text,
       );
-      try {
-        await _authService.signUpService(signupModel);
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Signup Successful'),
-          ),
-        );
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const LoginView(),
-          ),
-        );
-      } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Signup Failed$e'),
-          ),
-        );
-      }
+
+      Provider.of<AuthProvider>(context, listen: false).signUp(signupModel);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context);
+
     return Scaffold(
       body: Form(
         key: _formKey,
@@ -119,18 +103,25 @@ class _SignupPageState extends State<SignupPage> {
                 Container(
                   padding: const EdgeInsets.only(top: 3, left: 3),
                   child: ElevatedButton(
-                    onPressed: _signUpUser,
+                    onPressed: authProvider.isLoading ? null : _signUpUser,
                     style: ElevatedButton.styleFrom(
                       shape: const StadiumBorder(),
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       backgroundColor: Colors.blue.shade200,
                     ),
-                    child: const Text(
-                      "Sign up",
-                      style: TextStyle(fontSize: 20),
-                    ),
+                    child: authProvider.isLoading
+                        ? const CircularProgressIndicator()
+                        : const Text(
+                            "Sign up",
+                            style: TextStyle(fontSize: 20),
+                          ),
                   ),
                 ),
+                if (authProvider.errorMessage != null)
+                  Text(
+                    authProvider.errorMessage!,
+                    style: const TextStyle(color: Colors.red),
+                  ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -139,8 +130,8 @@ class _SignupPageState extends State<SignupPage> {
                         onPressed: () {
                           Navigator.push(
                             context,
-                             MaterialPageRoute(
-                              builder: (context) => LoginView(),
+                            MaterialPageRoute(
+                              builder: (context) => const LoginView(),
                             ),
                           );
                         },

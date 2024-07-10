@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:taskmanagment/core/provider/auth_provider.dart';
+import 'package:taskmanagment/core/provider/task_provider.dart';
 import 'package:taskmanagment/utils/theme/theme.dart';
 
 import 'core/view/auth/login_view.dart';
@@ -13,12 +16,18 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeDataConfig.lightTheme,
-      darkTheme: ThemeDataConfig.lightTheme,
-      home: const LoginView(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) =>AuthProvider()),
+        ChangeNotifierProvider(create: (_) =>TaskProvider()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        theme: ThemeDataConfig.lightTheme,
+        darkTheme: ThemeDataConfig.lightTheme,
+        home: const LoginView(),
+      ),
     );
   }
 }

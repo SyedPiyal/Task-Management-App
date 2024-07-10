@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:taskmanagment/core/view/auth/signup_view.dart';
-import 'package:taskmanagment/utils/extensions/context_ext.dart';
 import '../../common/custom_textFormField.dart';
 import '../../model/login.dart';
-import '../../service/auth_service.dart';
-import '../home/home_view.dart';
+import '../../provider/auth_provider.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -18,42 +17,18 @@ class _LoginViewState extends State<LoginView> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
-  final AuthService _authService = AuthService();
-
   void _login() async {
     if (_formKey.currentState!.validate()) {
       Login loginData = Login(
           email: _emailController.text, password: _passwordController.text);
-      try {
-        await _authService.loginService(loginData);
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Login Successful'),
-          ),
-        );
-
-        // navigate to home screen if successfull ----------------------
-
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const HomePage(),
-          ),
-        );
-      } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Login Failed $e'),
-          ),
-        );
-      }
+      Provider.of<AuthProvider>(context, listen: false).login(loginData);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final theme = context.theme;
+    final authProvider = Provider.of<AuthProvider>(context);
     return Scaffold(
       body: Form(
         key: _formKey,
@@ -92,17 +67,24 @@ class _LoginViewState extends State<LoginView> {
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
-                  onPressed: _login,
+                  onPressed: authProvider.isLoading ? null : _login,
                   style: ElevatedButton.styleFrom(
                     shape: const StadiumBorder(),
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     backgroundColor: Colors.blue.shade100,
                   ),
-                  child: const Text(
-                    "Login",
-                    style: TextStyle(fontSize: 20),
-                  ),
+                  child: authProvider.isLoading
+                      ? const CircularProgressIndicator()
+                      : const Text(
+                          "Login",
+                          style: TextStyle(fontSize: 20),
+                        ),
                 ),
+                if (authProvider.errorMessage != null)
+                  Text(
+                    authProvider.errorMessage!,
+                    style: const TextStyle(color: Colors.red),
+                  ),
                 TextButton(
                   onPressed: () {},
                   child: const Text(
