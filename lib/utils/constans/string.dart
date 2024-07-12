@@ -2,6 +2,16 @@
 
 import 'package:flutter/material.dart';
 
+class AssetsPath {
+  static const String help = 'assets/image/help.svg';
+  static const String failure = 'assets/image/failure.svg';
+  static const String success = 'assets/image/success.svg';
+  static const String warning = 'assets/image/warning.svg';
+
+  static const String back = 'assets/image/back.svg';
+  static const String bubbles = 'assets/image/bg_image.svg';
+}
+
 List<String> items = [
   'Sleep',
   'Walk',

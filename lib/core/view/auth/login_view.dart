@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:taskmanagment/core/view/auth/signup_view.dart';
+import '../../common/custom_snackbar.dart';
 import '../../common/custom_textFormField.dart';
+import '../../common/function.dart';
+import '../../common/snackbar_content_type.dart';
 import '../../model/login.dart';
 import '../../provider/auth_provider.dart';
 
@@ -20,9 +23,39 @@ class _LoginViewState extends State<LoginView> {
   void _login() async {
     if (_formKey.currentState!.validate()) {
       Login loginData = Login(
-          email: _emailController.text, password: _passwordController.text);
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
 
-      Provider.of<AuthProvider>(context, listen: false).login(loginData);
+      // Provider.of<AuthProvider>(context, listen: false).login(loginData);
+
+      bool isSuccess = await context.read<AuthProvider>().login(loginData);
+
+      if (isSuccess) {
+        // Show success CustomSnackbar
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: CustomSnackbar(
+              title: 'Login Successful',
+              message: 'You have successfully logged in.',
+              contentType: SnackBarContentType.success,
+            ),
+          ),
+        );
+      } else {
+        final authProvider = context.read<AuthProvider>();
+        // Show error CustomSnackbar
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: CustomSnackbar(
+              title: 'Login Failed',
+              message: 'Failed to login: ${authProvider.errorMessage}',
+              contentType: SnackBarContentType.failure,
+
+            ),
+          ),
+        );
+      }
     }
   }
 
@@ -80,11 +113,11 @@ class _LoginViewState extends State<LoginView> {
                           style: TextStyle(fontSize: 20),
                         ),
                 ),
-                if (authProvider.errorMessage != null)
+                /*if (authProvider.errorMessage != null)
                   Text(
                     authProvider.errorMessage!,
                     style: const TextStyle(color: Colors.red),
-                  ),
+                  ),*/
                 TextButton(
                   onPressed: () {},
                   child: const Text(

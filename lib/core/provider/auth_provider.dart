@@ -12,23 +12,27 @@ class AuthProvider with ChangeNotifier {
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
 
-  Future<void> signUp(SignupModel signupModel) async {
+  Future<bool> signUp(SignupModel signupModel) async {
     _setLoading(true);
     try {
       await _authService.signUpService(signupModel);
       _setLoading(false);
+      return true;
     } catch (e) {
       _setErrorMessage(e.toString());
+      return false;
     }
   }
 
-  Future<void> login(Login loginData) async {
+  Future<bool> login(Login loginData) async {
     _setLoading(true);
     try {
       await _authService.loginService(loginData);
       _setLoading(false);
+      return true;
     } catch (e) {
       _setErrorMessage(e.toString());
+      return false;
     }
   }
 
